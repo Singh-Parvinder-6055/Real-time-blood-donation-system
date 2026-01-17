@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "ejs": "^4.0.1",
+    "ejs-mate": "^4.0.0",
     "express": "^5.2.1",
     "express-session": "^1.18.2",
     "joi": "^18.0.2",
