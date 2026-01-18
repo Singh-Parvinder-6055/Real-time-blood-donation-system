@@ -1,35 +1,102 @@
-/* .bloodGroup{
-    display:flex;
-    justify-content:space-around;
-    flex-wrap:wrap;
-    
-} */
- .show-btns{
-    display:flex;
-}
-/* Reduce horizontal spacing between nav links */
-.custom-navbar .nav-link {
-  padding-left: 20px;
-  padding-right: 20px;
-  margin: 0 4px;
-  white-space: nowrap;
-}
-/* Color the entire navbar */
+/* ================= NAVBAR ================= */
+
 .custom-navbar {
-  background-color: #E2CDCD;   /* or any color you want */
+  background: linear-gradient(90deg, #ffffff, #fff5f5);
+  border-bottom: 3px solid #bf1818;
+  padding: 10px 30px;
+  font-family: "Poppins", sans-serif;
 }
 
+/* BRAND ICON */
+.custom-navbar .navbar-brand i {
+  font-size: 1.6rem;
+  color: #bf1818;
+}
 
-.ebutton{
-    background-color: #f10e0e;
-    border: #E2CDCD;
-    border-radius:1em;
-    
+/* NAV LINKS */
+.custom-navbar .nav-link {
+  color: #333 !important;
+  font-weight: 500;
+  padding: 8px 16px;
+  margin: 0 4px;
+  position: relative;
+  transition: all 0.3s ease;
 }
-.nav-logo {
-  height: 40px;     /* control logo height */
-  width: auto;      /* keep aspect ratio */
+
+/* underline hover effect */
+.custom-navbar .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0%;
+  height: 2px;
+  background-color: #bf1818;
+  transition: width 0.3s ease;
 }
+
+.custom-navbar .nav-link:hover::after {
+  width: 100%;
+}
+
+.custom-navbar .nav-link:hover {
+  color: #bf1818 !important;
+}
+
+/* RIGHT SIDE AUTH LINKS */
+.custom-navbar .navbar-nav.ms-auto .nav-link {
+  font-weight: 600;
+}
+
+/* SIGN UP */
+.custom-navbar .navbar-nav.ms-auto a[href="/signup"] {
+  background-color: #bf1818;
+  color: white !important;
+  border-radius: 25px;
+  padding: 8px 18px;
+}
+
+.custom-navbar .navbar-nav.ms-auto a[href="/signup"]:hover {
+  background-color: #9e1212;
+}
+
+/* LOGIN */
+.custom-navbar .navbar-nav.ms-auto a[href="/login"] {
+  color: #bf1818 !important;
+}
+
+/* EMERGENCY BUTTON */
+.ebutton {
+  background-color: #bf1818;
+  border: none;
+  border-radius: 25px;
+  padding: 0 10px;
+  margin-left: 8px;
+  transition: 0.3s;
+}
+
+.ebutton a {
+  color: white !important;
+  font-weight: 600;
+}
+
+.ebutton:hover {
+  background-color: #9e1212;
+  transform: scale(1.05);
+}
+
+/* MOBILE FIXES */
+@media (max-width: 768px) {
+  .custom-navbar {
+    padding: 8px 16px;
+  }
+
+  .custom-navbar .nav-link {
+    margin: 6px 0;
+  }
+}
+
+/* homepage */
 
 /* HERO BACKGROUND */
 .hero {
@@ -43,10 +110,6 @@
   padding: 40px 20px;
 }
 
-/* CONTENT WRAPPER */
-/* .hero-content {
-  max-width: 900px;
-} */
 
 /* BADGE */
 .badge {
@@ -170,4 +233,267 @@
 }
 .show-btns{
     display:flex;
+}
+
+
+
+/* Role Selection Section */
+
+.back-home-btn {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 10px 18px;
+  border-radius: 30px;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+
+.back-home-btn i {
+  margin-right: 8px;
+}
+
+.back-home-btn:hover {
+  background: white;
+  color: #d90429;
+}
+
+.role-section {
+  min-height: 90vh;
+  background: linear-gradient(135deg, #d90429, #9d0208);
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+/* Emergency badge */
+.emergency-badge {
+  background: #fff;
+  color: #d90429;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 30px;
+}
+
+/* Titles */
+.main-title {
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.subtitle {
+  max-width: 600px;
+  margin: auto;
+  opacity: 0.9;
+}
+
+/* Cards */
+.role-card {
+  background: #fff;
+  color: #222;
+  padding: 40px 25px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.role-card i {
+  font-size: 3rem;
+  color: #d90429;
+  margin-bottom: 15px;
+}
+
+.role-card h4 {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.role-card p {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.role-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+}
+
+
+/* donor singnup */
+
+.signup-hero {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #d90429, #9d0208);
+  padding: 60px 0;
+  color: white;
+}
+
+/* INFO STRIP */
+.info-strip {
+  background: rgba(255,255,255,0.15);
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* HEADING */
+.signup-heading h1 {
+  font-size: 3.2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.signup-heading p {
+  max-width: 500px;
+  margin-top: 10px;
+  opacity: 0.9;
+}
+
+/* CARD */
+.signup-card {
+  background: white;
+  color: #222;
+  margin-top: 40px;
+  padding: 40px;
+  border-radius: 24px;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.35);
+}
+
+/* BUTTON  */
+.cta-btn {
+  background: #d90429;
+  color: white;
+  border: none;
+  padding: 14px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 14px;
+  transition: 0.3s;
+}
+
+.cta-btn:hover {
+  background: #9d0208;
+  transform: translateY(-2px);
+}
+
+/* BLOOD GROUP */
+.blood-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.blood-pill {
+  border: 2px solid #d90429;
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.blood-pill input {
+  display: none;
+}
+
+.blood-pill span {
+  display: block;
+  padding: 10px 0;
+  font-weight: 600;
+  color: #d90429;
+}
+
+.blood-pill input:checked + span {
+  background: #d90429;
+  color: white;
+}
+
+/* MOBILE */
+@media (max-width: 576px) {
+  .signup-heading h1 {
+    font-size: 2.4rem;
+  }
+
+  .blood-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Organization type */
+.org-type-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.org-pill {
+  border: 2px solid #d90429;
+  border-radius: 14px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.org-pill input {
+  display: none;
+}
+
+.org-pill span {
+  display: block;
+  padding: 12px;
+  font-weight: 600;
+  color: #d90429;
+}
+
+.org-pill input:checked + span {
+  background: #d90429;
+  color: white;
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .org-type-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* patient signup */
+
+.blood-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.blood-pill {
+  border: 2px solid #d90429;
+  border-radius: 14px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.blood-pill input {
+  display: none;
+}
+
+.blood-pill span {
+  display: block;
+  padding: 10px;
+  font-weight: 600;
+  color: #d90429;
+}
+
+.blood-pill input:checked + span {
+  background: #d90429;
+  color: #fff;
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .blood-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
