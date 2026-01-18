@@ -18,7 +18,7 @@ router.post("/camp",isLoggedIn,isVerified,async(req,res)=>{
     }
     let newCamp= await new Camp(camp);
     await newCamp.save();
-    console.log("Camp organized successfully");
+    req.flash("success","Donation Camp Created Successfully");
     res.redirect("/");
 });
 

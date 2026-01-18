@@ -8,8 +8,11 @@ const session=require("express-session");
 const userRouter=require("./Routes/user");
 const emergencyRouter=require("./Routes/emergency");
 const campRouter=require("./Routes/camp");
+const verificationRouter=require("./Routes/verification");
 const User=require("./models/user");
 const ejsMate=require("ejs-Mate");
+const flash=require("connect-flash");
+
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
@@ -31,7 +34,7 @@ const sessionOptions={
 };
 
 app.use(session(sessionOptions));
-//app.use(flash());
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate())); //this is used for authentication, If we don't use it, user won't be authenticated during login
@@ -52,6 +55,8 @@ Main().then(()=>{console.log("connected to database");}).catch(err=>{console.log
 
 app.use((req,res,next)=>{
     res.locals.currUser=req.user;
+    res.locals.success=req.flash("success");
+    res.locals.error=req.flash("error");
     next();
 })
 app.get("/",(req,res)=>{
@@ -68,4 +73,22 @@ res.render("common interface/index.ejs");
 app.use("/",userRouter);
 app.use("/",emergencyRouter);
 app.use("/",campRouter);
+app.use("/",verificationRouter);
 
+
+//when no path matched
+app.use((req,res,next)=>{
+    next(new ExpressError(404,"Page not found!"));
+});
+
+
+//error handling middleware
+app.use((err,req,res,next)=>{
+    //console.log("newError");
+    //res.send("Error");
+    let{status=500,message="Something went wrong"}=err;
+    
+    res.status(status).render("listings/error.ejs",{message});
+    
+    //next(err.message);
+});

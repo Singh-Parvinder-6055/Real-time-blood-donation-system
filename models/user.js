@@ -78,8 +78,17 @@ const userSchema = new Schema({
   isVerified: {
     type: Boolean,
     default: false
-  }
-}); 
+  },
+  verification: {
+  type: Schema.Types.ObjectId,
+  ref: "OrganizationVerification",
+  default: null
+}
+
+},
+{timestaps:true}
+); 
+
 
 userSchema.plugin(passportLocalMongoose);
 

@@ -6,7 +6,7 @@ const {emergencySchema}=require("../Schema");
 const Emergency=require("../models/emergency");
 
 router.get("/emergency",isLoggedIn,isVerified,(req,res)=>{
-    res.render("emergency/emergencyRequirement.ejs");
+    res.render("emergency/createEmergency.ejs");
 });
 
 router.post("/emergency",isLoggedIn,isVerified,async(req,res)=>{
@@ -24,6 +24,7 @@ router.post("/emergency",isLoggedIn,isVerified,async(req,res)=>{
         let newEmergency=await new Emergency(emergency);
         // console.log(`mongoDb ${newEmergency}`);
         await newEmergency.save();
+        req.flash("success","Emergency Blood requirement Created Successfully!");
         res.redirect("/");
     }
     catch(err){

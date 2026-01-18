@@ -6,6 +6,13 @@ module.exports.isVerified=(req,res,next)=>{
     next();
 };
 
+module.exports.isOrganization=(req,res,next)=>{
+    if(req.user.role!="organization"){
+        return res.send("You can't get verified");
+    }
+    next();
+};
+
 module.exports.isLoggedIn=(req,res,next)=>{
     
     if(!req.isAuthenticated()){

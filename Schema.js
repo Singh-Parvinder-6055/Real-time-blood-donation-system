@@ -137,3 +137,43 @@ module.exports.campSchema = Joi.object({
     .items(Joi.string())
     .optional()
 });
+
+
+module.exports.verificationSchema = Joi.object({
+  organization: Joi.string()
+    .pattern(/^[0-9a-fA-F]{24}$/)
+    .required()
+    .messages({
+      "string.pattern.base": "Invalid organization ID"
+    }),
+
+  document: Joi.object({
+    documentType: Joi.string()
+      .valid(
+        "registration_certificate",
+        "hospital_license",
+        "government_id",
+        "other"
+      )
+      .required(),
+
+    documentUrl: Joi.string()
+      .required()
+  }).required(),
+
+  verificationStatus: Joi.string()
+    .valid("pending", "approved", "rejected")
+    .default("pending"),
+
+  verifiedBy: Joi.string()
+    .pattern(/^[0-9a-fA-F]{24}$/)
+    .optional(),
+
+  verifiedAt: Joi.date().optional(),
+
+  rejectionReason: Joi.when("verificationStatus", {
+    is: "rejected",
+    then: Joi.string().min(5).required(),
+    otherwise: Joi.forbidden()
+  })
+});

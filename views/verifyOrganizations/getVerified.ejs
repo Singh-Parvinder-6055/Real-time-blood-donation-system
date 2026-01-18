@@ -1,0 +1,32 @@
+<% layout("layouts/boilerplate") %>
+<body>
+    <form method="POST" action="/getVerified" class="needs-validation" novalidate enctype="multipart/form-data">
+        <div class="row">
+        <div class="col-8 offset-2" >
+        <h4>Get Verified</h4>
+    <div class="mt-3 mb-3">
+        <p><b>Select Document Type: </b></p>
+        <select class="form-control"  name="verification[document][documentType]" required>
+             <option value="hospital_license">Hospital License</option>
+            <option value="registration_certificate">Registration Certificate</option>
+            <option value="government_id">Government ID</option>
+            <option value="other">Other</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="document" class="form-label">Upload Document </label>
+        <input type="file" id="document" class="form-control"name="document"required/>
+    </div>
+
+
+        
+         <br>         
+        <button class="btn btn-dark add-btn">Add</button>
+        <br><br>
+        </div>
+        </div>
+    </form>
+    
+</body>
+</html>

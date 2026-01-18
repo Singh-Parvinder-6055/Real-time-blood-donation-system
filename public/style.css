@@ -7,3 +7,6 @@
  .show-btns{
     display:flex;
 }
+.container{
+    flex:1;
+}
