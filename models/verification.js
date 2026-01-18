@@ -39,7 +39,7 @@ const verificationSchema = new Schema(
       default: "pending"
     },
 
-    verifiedBy: {
+    reviewedBy: {
       type: Schema.Types.ObjectId,
       ref: "User" // admin
     },

@@ -2,6 +2,9 @@
 <body> 
     <h3>All Verification Requests</h3>
     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+      <%if(!verifications.length){%>
+        <p class="mb-2 mt-2"><i>You have got no work today, Enjoy your day!&#x1F600;</i><p>
+      <%}%>
      <%for(verification of verifications) {%>
        <a href="/verification/<%=verification._id%>" title="review" class="verification-link">
         <div class="card verification-card col" style="width: 20rem;">

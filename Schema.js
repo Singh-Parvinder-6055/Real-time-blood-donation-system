@@ -165,7 +165,7 @@ module.exports.verificationSchema = Joi.object({
     .valid("pending", "approved", "rejected")
     .default("pending"),
 
-  verifiedBy: Joi.string()
+  reviewdBy: Joi.string()
     .pattern(/^[0-9a-fA-F]{24}$/)
     .optional(),
 

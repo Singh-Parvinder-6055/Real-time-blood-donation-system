@@ -24,7 +24,10 @@
           
         <%}%>
         <a class=" howItWorks nav-link">How it works? </a>
-        <a class="nav-link" href="/verify">Verify Organizations</a>
+        <%if(currUser && currUser.role=="admin"){%>
+          <a class="nav-link" href="/verify">Verify Organizations</a>
+        <%}%>
+        
       </div>
       <div class="navbar-nav ms-auto">
         

@@ -1,5 +1,5 @@
 module.exports.isVerified=(req,res,next)=>{
-    if(!req.user.isVerified ||req.user.role!="admin"){
+    if(!req.user.isVerified){
         req.flash("error","You are not verified")
         return res.redirect("/");
     }
