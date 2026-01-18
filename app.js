@@ -9,9 +9,11 @@ const userRouter=require("./Routes/user");
 const emergencyRouter=require("./Routes/emergency");
 const campRouter=require("./Routes/camp");
 const verificationRouter=require("./Routes/verification");
+const adminRouter=require("./Routes/admin");
 const User=require("./models/user");
 const ejsMate=require("ejs-Mate");
 const flash=require("connect-flash");
+const ExpressError=require("./utils/ExpressError");
 
 
 app.set("view engine","ejs");
@@ -74,6 +76,7 @@ app.use("/",userRouter);
 app.use("/",emergencyRouter);
 app.use("/",campRouter);
 app.use("/",verificationRouter);
+app.use("/",adminRouter);
 
 
 //when no path matched

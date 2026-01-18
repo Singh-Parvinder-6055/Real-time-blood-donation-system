@@ -1,0 +1,19 @@
+<% layout("layouts/boilerplate") %>
+<body> 
+    <h3>All Verification Requests</h3>
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+     <%for(verification of verifications) {%>
+       <a href="/verification/<%=verification._id%>" title="review" class="verification-link">
+        <div class="card verification-card col" style="width: 20rem;">
+
+              <div class="card-img-overlay"></div> <!--hover effect happening here-->
+                <div class="card-body">
+                    <h3 class="card-text"><b><%=verification.organization.name%></b></h3>
+                    <p class="card-text"><i>Created On:</i></p>
+                    <p class="card-text"> <%=verification.createdAt.toString().split(" ").slice(0,4).join(" ")%></p>
+                </div>
+                
+        </div>
+       </a>        
+    <%}%>
+    </div>

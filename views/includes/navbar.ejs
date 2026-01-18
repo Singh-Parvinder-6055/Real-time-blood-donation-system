@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 
 <nav class="navbar navbar-expand-md bg-body-tertiary sticky-top border-bottom custom-navbar" >
   <div class="container-fluid">
@@ -11,23 +11,22 @@
         <a class="nav-link"><i class="fa-solid fa-droplet fa-beat-fade" style="color: #bf1818;"></i></a>
         <a class="nav-link " aria-current="page" href="/">Home</a>
         <% if(currUser && (currUser.role=="organization"||currUser.role=="admin")) {%>
-        <a class="nav-link" href="/emergency">Create Emergency request</a>
-        <a class="nav-link" href="/camp">Create Camp</a>
+          <button class="ebutton">
+           <a class="nav-link" href="/emergency">
+          <i class="fa-solid fa-truck-medical">
+          </i> Emergency </a>
+        </button>
+        <!-- <a class="nav-link" href="/emergency"></a> -->
+        <a class="nav-link" href="/camp">Organize a Camp</a>
           <%if(currUser&& currUser.role=="organization"){%>
             <a class="nav-link" href="/getVerified">Get Verified</a>
           <%}%>
           
         <%}%>
-        
+        <a class=" howItWorks nav-link">How it works? </a>
+        <a class="nav-link" href="/verify">Verify Organizations</a>
       </div>
       <div class="navbar-nav ms-auto">
-
-        <a class="nav-link">How it works? </a>
-        <button class="ebutton">
-           <a class="nav-link">
-          <i class="fa-solid fa-truck-medical">
-          </i> Emergency </a>
-        </button>
         
         <%if(!currUser){%>
             <a class="nav-link" href="/signup">Sign Up</a>

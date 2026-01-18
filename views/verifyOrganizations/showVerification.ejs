@@ -1,0 +1,33 @@
+<% layout("layouts/boilerplate") %>
+<body>
+<div class="row">
+    <div class="col-8 offset-3">
+        <h3><%=verification.organization.name%></h3>
+    </div>
+<div class="col-6 offset-3">
+        <div class="verification-card">
+                <a href="<%=verification.document.documentUrl%>"><img src="<%=verification.document.documentUrl%>" id="show-img" class="card-img-top show-img" alt="Document Image"></a>
+            <div class="card-body">
+                 
+                <p class="card-text"><i><b>Type of Organization:</b> <%=verification.organization.organizationType%></i></p><br>
+                
+                <p class="card-text"><i><b>Created on:</b> </i><%=verification.createdAt.toString().split(" ").slice(0,4).join(" ")%></p><br>
+                
+                <p class="card-text"><b>Location:</b> <%=verification.organization.city%></p><br>
+                <p class="card-text"><b>Country:</b> <%=verification.organization.country%></p>  <br>
+                    
+                
+                </p>
+            </div>
+        </div>
+
+        <div class="show-btns">
+                <a href="/verify/<%=verification._id%>" class="btn btn-success col-sm-4 col-md-2 verify-btn">Verify</a>
+                
+                <a href="/reject/<%=verification._id%>" class="btn btn-danger col-sm-4 col-md-2 reject-btn offset-3">Reject</a>
+                
+            </div>
+
+    </div>
+</div>
+</body>
