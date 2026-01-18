@@ -67,7 +67,7 @@ app.get("/",(req,res)=>{
     //     req.session.count=1;
     // }
     // res.send(`you sent request ${req.session.count} times`);
-res.render("common interface/index.ejs");
+res.render("common/index.ejs");
 });
 
 app.use("/",userRouter);
@@ -88,7 +88,7 @@ app.use((err,req,res,next)=>{
     //res.send("Error");
     let{status=500,message="Something went wrong"}=err;
     
-    res.status(status).render("listings/error.ejs",{message});
+    res.status(status).render("common/error.ejs",{message});
     
     //next(err.message);
 });

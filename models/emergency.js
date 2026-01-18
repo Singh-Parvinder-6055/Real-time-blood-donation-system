@@ -54,4 +54,4 @@ const emergencyRequirementSchema = new Schema({
 { timestamps: true } //this automatically two fields (i.e. createdAt and updatedAt)
 );
 
-module.exports = mongoose.model("EmergencyRequirement",emergencyRequirementSchema);
+module.exports = mongoose.model("Emergency",emergencyRequirementSchema);
