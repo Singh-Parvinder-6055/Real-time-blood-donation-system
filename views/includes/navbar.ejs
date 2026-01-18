@@ -10,10 +10,13 @@
       <div class="navbar-nav">
         <a class="nav-link"><i class="fa-solid fa-droplet fa-beat-fade" style="color: #bf1818;"></i></a>
         <a class="nav-link " aria-current="page" href="/">Home</a>
+        <% if(currUser && (currUser.role=="organization"||currUser.role=="admin")) {%>
         <a class="nav-link" href="/emergency">Create Emergency request</a>
         <a class="nav-link" href="/camp">Create Camp</a>
-        <% if(currUser && currUser.role=="organization") {%>
-          <a class="nav-link" href="/getVerified">Get Verified</a>
+          <%if(currUser&& currUser.role=="organization"){%>
+            <a class="nav-link" href="/getVerified">Get Verified</a>
+          <%}%>
+          
         <%}%>
         
       </div>
