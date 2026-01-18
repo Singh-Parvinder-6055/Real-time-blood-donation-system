@@ -7,6 +7,7 @@ const LocalStrategy=require("passport-local");
 const session=require("express-session");
 const userRouter=require("./Routes/user");
 const emergencyRouter=require("./Routes/emergency");
+const campRouter=require("./Routes/camp");
 const User=require("./models/user");
 const ejsMate=require("ejs-Mate");
 
@@ -49,6 +50,10 @@ async function Main(){
 
 Main().then(()=>{console.log("connected to database");}).catch(err=>{console.log(err);});
 
+app.use((req,res,next)=>{
+    res.locals.currUser=req.user;
+    next();
+})
 app.get("/",(req,res)=>{
     // if(req.session.count){
     //     req.session.count++;
@@ -62,4 +67,5 @@ res.render("common interface/index.ejs");
 
 app.use("/",userRouter);
 app.use("/",emergencyRouter);
+app.use("/",campRouter);
 

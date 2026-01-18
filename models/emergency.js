@@ -23,7 +23,7 @@ const emergencyRequirementSchema = new Schema({
   },
 
   requestedBy: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "User", // organization
     required: true
   },
@@ -38,16 +38,20 @@ const emergencyRequirementSchema = new Schema({
     enum: ["open", "fulfilled", "closed"],
     default: "open"
   },
-
-  requiredBy: {
-    type: Date,
-    required: true
+  fulfilledBy:{
+    type:Schema.Types.ObjectId,
+    ref:"User"
   },
+  fulfilledOn:Date,
 
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
-});
+//   requiredBy: {
+//     type: Date,
+//     required: true
+//   },
+
+  
+},
+{ timestamps: true } //this automatically two fields (i.e. createdAt and updatedAt)
+);
 
 module.exports = mongoose.model("EmergencyRequirement",emergencyRequirementSchema);

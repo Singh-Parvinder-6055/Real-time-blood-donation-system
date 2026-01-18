@@ -1,20 +1,26 @@
-const Joi=require("joi");
+const Joi = require("joi");
 
+//Joi schema for user
 module.exports.userSchema = Joi.object({
-  username: Joi.string().email().required(),
-  password: Joi.string().min(6).required(),
-
+  // Common fields
+  username: Joi.string().alphanum().min(3).max(30).required(),
+  password: Joi.string().min(4).required(),
+  email: Joi.string().email().required(),
+  
   role: Joi.string()
-    .valid("donor", "organization")
+    .valid("donor", "patient", "organization")
     .required(),
 
-  name: Joi.string().min(2).required(),
+  name: Joi.string().min(2).max(100).required(),
 
-  phone: Joi.number().required(),
-  
-  email:Joi.string().required(),
+  phone: Joi.string()
+        .max(12)
+        .required(),
 
-  // Donor-only
+  country: Joi.string().required(),
+  city: Joi.string().required(),
+
+  // ───────── DONOR ONLY ─────────
   bloodGroup: Joi.when("role", {
     is: "donor",
     then: Joi.string()
@@ -22,11 +28,20 @@ module.exports.userSchema = Joi.object({
       .required(),
     otherwise: Joi.forbidden()
   }),
-  age:Joi.when("role",{
-    is:"donor",
-    then:Joi.number().min(16).required(),
-    otherwise: Joi.forbidden()
-  }),
+
+  age: Joi.when("role", {
+  switch: [
+    {
+      is: "donor",
+      then: Joi.number().min(18).required()
+    },
+    {
+      is: "patient",
+      then: Joi.number().required()
+    }
+  ],
+  otherwise: Joi.forbidden()
+}),
 
   lastDonationDate: Joi.when("role", {
     is: "donor",
@@ -34,29 +49,91 @@ module.exports.userSchema = Joi.object({
     otherwise: Joi.forbidden()
   }),
 
-  // Organization-only
-  organizationType: Joi.when("role", {
-    is: "organization",
+  // ───────── PATIENT ONLY ─────────
+  patientBloodGroup: Joi.when("role", {
+    is: "patient",
     then: Joi.string()
-      .valid("hospital", "blood-bank")
+      .valid("A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-")
       .required(),
     otherwise: Joi.forbidden()
   }),
 
-  country:Joi.string().required(),
-  location:Joi.string().required()
+  // ───────── ORGANIZATION ONLY ─────────
+  organizationType: Joi.when("role", {
+    is: "organization",
+    then: Joi.string()
+      .valid("hospital", "blood-bank", "ngo")
+      .required(),
+    otherwise: Joi.forbidden()
+  }),
+
+  
+});
+
+
+
+//Joi schema for emergency blood requirements
+module.exports.emergencySchema = Joi.object({
+  bloodGroup: Joi.string()
+    .valid("A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-")
+    .required(),
+
+  unitsRequired: Joi.number().min(1).required(),
+
+  urgencyLevel: Joi.string()
+    .valid("low", "medium", "high")
+    .required(),
+
+  requestedBy: Joi.string().required(),
+
+  city: Joi.string().required(),
+
+  status: Joi.string()
+    .valid("open", "fulfilled", "closed")
+    .default("open"),
+
+  fulfilledBy: Joi.when("status", {
+    is: "fulfilled",
+    then: Joi.string().required(),
+    otherwise: Joi.forbidden()
+  }),
+
+  fulfilledOn: Joi.when("status", {
+    is: "fulfilled",
+    then: Joi.date().required(),
+    otherwise: Joi.forbidden()
+  }),
+  //createdAt:Joi.date().required()
 });
 
 
 
 
-module.exports.emergencyBloodSchema=Joi.object({
-    emergency:Joi.object({
-        bloodGroup:Joi.string().required(),
-        country:Joi.string().required(),
-        location:Joi.string().required(),
-        date:Joi.date(),
-        nameOfOrganization:Joi.string(),
-    }).required()
-});
+module.exports.campSchema = Joi.object({
+  country: Joi.string()
+    .min(2)
+    .required(),
 
+  city: Joi.string()
+    .min(2)
+    .required(),
+
+  startDateTime: Joi.date() 
+    .greater("now")   //should be greater than now
+    .required(),
+
+  endDateTime: Joi.date()
+    .greater(Joi.ref("startDateTime")) //end time should be greater than start time
+    .required(),
+
+  organizer: Joi.string()
+    .required(),
+
+  status: Joi.string()
+    .valid("upcoming", "ongoing", "completed", "cancelled")
+    .optional(),
+
+  registeredDonors: Joi.array()
+    .items(Joi.string())
+    .optional()
+});

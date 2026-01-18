@@ -5,13 +5,13 @@ const Schema= mongoose.Schema;
 const userSchema = new Schema({
   role: {
     type: String,
-    enum: ["donor", "patient", "organization"],
+    enum: ["donor", "patient", "organization","admin"],
     required: true
   },
 
   name: {
     type: String,
-    required: true
+    
   },
 
   phone:{
@@ -53,13 +53,13 @@ const userSchema = new Schema({
     type: String,
     enum: ["hospital", "blood-bank", "ngo"]
   },
-  emergencyRequirements:[
+  emergencies:[
     {
         type:Schema.Types.ObjectId,
         ref:"Emergency"
     }
   ],
-  donationCamps:[{
+  camps:[{
     type:Schema.Types.ObjectId,
     ref:"DonationCamp"
   }],
