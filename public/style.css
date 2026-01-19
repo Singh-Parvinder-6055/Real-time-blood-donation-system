@@ -131,11 +131,12 @@
 }
 
 
-.verification-card{
-    /* border:none !important; */
-    margin-bottom:2rem;
+ /* .verification-card{
+    border:none !important;
+    
+    padding:0.7rem 0;
 
-}
+ }  */
 /* image */
 .card-img-top{
     border-radius:1rem !important;
@@ -170,4 +171,19 @@
 }
 .show-btns{
     display:flex;
+}
+
+.reviewVerification{
+  color:white;
+  background-color:#0d6efd;  
+  padding:0.3rem 0.7rem;
+  border-radius:0.5rem;
+   
+}
+
+.verification-cards{
+    /* border:none !important; */
+    margin:2rem 2rem;
+    padding:1em;
+
 }

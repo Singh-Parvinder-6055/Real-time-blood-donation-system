@@ -3,6 +3,7 @@ const router=express.Router();
 const { userSchema } = require("../Schema.js");
 const User=require("../models/user.js");
 const passport=require("passport");
+const {isLoggedIn}=require("../middlewares.js");
 
 
 router.get("/signup",(req,res)=>{
@@ -73,4 +74,7 @@ router.get("/logout",async(req,res)=>{
     })
 });
 
+router.get("/dashboard",isLoggedIn,(req,res)=>{
+    res.render("common/dashboard");
+});
 module.exports=router;

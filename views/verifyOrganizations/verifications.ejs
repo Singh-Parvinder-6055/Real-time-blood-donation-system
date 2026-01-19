@@ -6,17 +6,19 @@
         <p class="mb-2 mt-2"><i>You have got no work today, Enjoy your day!&#x1F600;</i><p>
       <%}%>
      <%for(verification of verifications) {%>
-       <a href="/verification/<%=verification._id%>" title="review" class="verification-link">
-        <div class="card verification-card col" style="width: 20rem;">
-
-              <div class="card-img-overlay"></div> <!--hover effect happening here-->
+       
+        <div class="card verification-cards col" style="width: 18rem;">
+              <!-- <div class="card-img-overlay"></div> hover effect happening here -->
                 <div class="card-body">
-                    <h3 class="card-text"><b><%=verification.organization.name%></b></h3>
+                    <h3 class="card-title"><b><%=verification.organization.name%></b></h3>
                     <p class="card-text"><i>Created On:</i></p>
-                    <p class="card-text"> <%=verification.createdAt.toString().split(" ").slice(0,4).join(" ")%></p>
+                    <p class="card-text"> <%=verification.createdAt.toString().split(" ").slice(0,4).join(" ")%></p><br>
+                    <a href="/verification/<%=verification._id%>" class="reviewVerification verification-link">Review</a>
                 </div>
                 
         </div>
-       </a>        
+               
     <%}%>
     </div>
+<!-- verification-card col  verification-link-->
+    
