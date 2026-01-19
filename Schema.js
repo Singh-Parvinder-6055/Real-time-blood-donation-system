@@ -19,6 +19,7 @@ module.exports.userSchema = Joi.object({
 
   country: Joi.string().required(),
   city: Joi.string().required(),
+  pincode:Joi.string().required(),
 
   // ───────── DONOR ONLY ─────────
   bloodGroup: Joi.when("role", {
@@ -85,6 +86,7 @@ module.exports.emergencySchema = Joi.object({
     .required(),
 
   requestedBy: Joi.string().required(),
+  patient: Joi.string().required(),
 
   city: Joi.string().required(),
 

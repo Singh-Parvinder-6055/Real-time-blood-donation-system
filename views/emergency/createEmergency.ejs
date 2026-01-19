@@ -5,6 +5,10 @@
         
         <form method="post" action="/emergency" class="needs-validation" novalidate>
             
+            <div class="mb-3">
+                <label class="form-label" for="patient">Enter Patient Username</label>
+                <input class="form-control" id="patient" name="emergency[patient]"type="text">
+            </div>
             
             <div class="mb-3">
             <select class="form-select" name=emergency[bloodGroup] aria-label="Default select example" required>

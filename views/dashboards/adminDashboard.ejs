@@ -1,0 +1,20 @@
+<%layout ("layouts/boilerplate")%>
+<div class="dashboard-container">
+    <h4>Hey <%=currUser.username%>  &#x1F44B;</h4>
+    <p class="blur"><i>Track your activity in this dashboard</i></p>
+    <%if(user.camps.length){%>
+        <%for(camp of user.camps){%>
+        <p><%=camp.startDateTime%></p>
+    <%}%>
+    <%}%>
+<br>
+    <%if(user.emergencies.length){%>
+        <%for(emergency of user.emergencies){%>
+        <p><%=emergency.status%></p>
+    <%}%>
+    <%}%>
+    
+</div>
+
+
+

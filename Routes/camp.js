@@ -17,6 +17,8 @@ router.post("/camp",isLoggedIn,isVerified,async(req,res)=>{
         return res.status(400).send(error);
     }
     let newCamp= await new Camp(camp);
+    req.user.camps.push(newCamp);
+    await req.user.save();
     await newCamp.save();
     req.flash("success","Donation Camp Created Successfully");
     res.redirect("/");

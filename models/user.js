@@ -61,7 +61,7 @@ const userSchema = new Schema({
   ],
   camps:[{
     type:Schema.Types.ObjectId,
-    ref:"DonationCamp"
+    ref:"Camp"
   }],
 
 //----common data-----
@@ -72,6 +72,10 @@ const userSchema = new Schema({
   city:{
     type:String,
     required:true,
+  },
+  pincode:{
+    type:String,
+    required:true
   },
 
 //----for admin and organization----

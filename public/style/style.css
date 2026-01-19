@@ -68,6 +68,7 @@
 /* EMERGENCY BUTTON */
 .ebutton {
   background-color: #bf1818;
+  
   border: none;
   border-radius: 25px;
   padding: 0 10px;
@@ -181,14 +182,7 @@
     flex:1;
 }
 
-.howItWorks{
-  border-radius:1em;
-  cursor: pointer;
-}
-.howItWorks:hover{
-  background-color:rgb(248, 124, 124);
-  border-radius:1em;
-}
+
 .verification-link{
     text-decoration:none;
 }

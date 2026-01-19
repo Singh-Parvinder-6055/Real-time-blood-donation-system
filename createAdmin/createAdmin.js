@@ -20,6 +20,7 @@ async function createAdmin() {
       country: "System",
       email: "admin@system.com",
       phone: "0000000000",
+      pincode:"0001",
       isVerified:true
     });
 

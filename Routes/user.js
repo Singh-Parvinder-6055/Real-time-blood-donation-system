@@ -3,7 +3,7 @@ const router=express.Router();
 const { userSchema } = require("../Schema.js");
 const User=require("../models/user.js");
 const passport=require("passport");
-const {isLoggedIn}=require("../middlewares.js");
+const {isLoggedIn,isAdmin, saveRedirectUrl}=require("../middlewares.js");
 
 
 router.get("/signup",(req,res)=>{
@@ -53,14 +53,16 @@ router.post("/signup",async(req,res)=>{
     });
 
 router.get("/login",(req,res)=>{
+    res.locals.hideNavbar=true;
     res.render("user/login.ejs");
 });
 
-router.post("/login",passport.authenticate('local',  //the passport.authenticate() internally calls req.login(user)  and passes the user after accessing the user from req.user
+router.post("/login",saveRedirectUrl,passport.authenticate('local',  //the passport.authenticate() internally calls req.login(user)  and passes the user after accessing the user from req.user
                     {failureRedirect:'/login', 
                     failureFlash:true}),(req,res)=>{
                         req.flash("success","Welcome Back!");
-                        res.redirect("/");
+                        let redirectUrl=res.locals.redirectUrl ||"/"; //now after the login, the users will either be redirected to the original path they tried to access or to the home page
+                        res.redirect(redirectUrl);
                     }
 );
 
@@ -76,7 +78,31 @@ router.get("/logout",async(req,res)=>{
     })
 });
 
-router.get("/dashboard",isLoggedIn,(req,res)=>{
-    res.render("common/dashboard");
+router.get("/dashboard/:id",isLoggedIn,async(req,res)=>{
+    let {id}=req.params;
+    let {role}=req.query;
+    if(!role){
+        res.locals.hideNavbar=true;
+        return res.render("/");
+    }
+    if(role=="donor"){
+        return res.render("dashboards/donorDashboard.ejs");
+        
+    }
+    if(role=="patient"){
+        return res.render("dashboards/patientDashboard.ejs");
+    }
+    if(role=="organization"){
+       return res.render("dashboards/organizationDashboard.ejs");
+    }
+    if(role=="admin"){
+        let user= await User.findById(id)
+        .populate({path:"camps",populate:{path:"organizer"}})
+
+        .populate({path:"emergencies",populate:{path:"requestedBy"}});
+
+        console.log(user);
+        return res.render("dashboards/adminDashboard.ejs",{user});
+    }
 });
 module.exports=router;

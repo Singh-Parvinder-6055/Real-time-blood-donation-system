@@ -27,6 +27,11 @@ const emergencyRequirementSchema = new Schema({
     ref: "User", // organization
     required: true
   },
+  patient:{
+    type:Schema.Types.ObjectId,
+    ref:"User",
+    required:true
+  },
 
   city: {
     type: String,

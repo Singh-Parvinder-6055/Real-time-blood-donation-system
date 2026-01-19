@@ -26,39 +26,43 @@
         <input name="user[role]" value="organization" hidden>
 
         <div class="mb-3">
-          <label>Organization Name</label>
-          <input class="form-control" name="user[name]" required>
+          <label class="form-label" for="name">Organization Name</label>
+          <input id="name" class="form-control" name="user[name]" required>
         </div>
 
         <div class="row">
           <div class="col-md-6 mb-3">
-            <label>Username</label>
-            <input class="form-control" name="user[username]" required>
+            <label class="form-label" for="username">Username</label>
+            <input id="username" class="form-control" name="user[username]" required>
           </div>
           <div class="col-md-6 mb-3">
-            <label>Password</label>
-            <input type="password" class="form-control" name="user[password]" required>
+            <label class="form-label"for="password">Password</label>
+            <input id="password" type="password" class="form-control" name="user[password]" required>
           </div>
         </div>
 
         <div class="mb-3">
-          <label>Email</label>
-          <input type="email" class="form-control" name="user[email]" required>
+          <label class="form-label" for="email">Email</label>
+          <input id="email" type="email" class="form-control" name="user[email]" required>
         </div>
 
         <div class="mb-3">
-          <label>Phone</label>
-          <input type="number" class="form-control" name="user[phone]" required>
+          <label class="form-label" for="phone">Phone</label>
+          <input id="phone" type="number" class="form-control" name="user[phone]" required>
         </div>
 
         <div class="row">
-          <div class="col-md-6 mb-3">
-            <label>Country</label>
-            <input class="form-control" name="user[country]" required>
+          <div class="col-md-4 mb-3">
+            <label class="form-label" for="country">Country</label>
+            <input id="country" class="form-control" name="user[country]" required>
           </div>
-          <div class="col-md-6 mb-3">
-            <label>City</label>
-            <input class="form-control" name="user[city]" required>
+          <div class="col-md-4 mb-3">
+            <label class="form-label" for="city">City</label>
+            <input id="city" class="form-control" name="user[city]" required>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label class="form-label" for="pincode">Pincode</label>
+            <input id="pincode" class="form-control" name="user[pincode]" required>
           </div>
         </div>
 

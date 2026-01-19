@@ -6,11 +6,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link"><i class="fa-solid fa-droplet fa-beat-fade" style="color: #bf1818;"></i></a>
+        <a class="navbar-brand"><i class="fa-solid fa-droplet fa-beat-fade" style="color: #bf1818;"></i></a>
         <a class="nav-link " aria-current="page" href="/">Home</a>
-        <% if(currUser && (currUser.role=="organization"||currUser.role=="admin")) {%>
+        <% if(!currUser ||(currUser && (currUser.role=="organization"||currUser.role=="admin"))) {%>
           <button class="ebutton">
-           <a class="nav-link" href="/emergency">
+           <a class="nav-link " id="emergencyTruck" href="/emergency">
           <i class="fa-solid fa-truck-medical">
           </i> Emergency Requirement</a>
         </button>
@@ -37,7 +37,7 @@
         <%if(currUser){%>
         
           <a class="nav-link" href="/logout">Log Out</a>
-          <a class="nav-link" href="/dashboard"><i class="fa-solid fa-user"></i></a>
+          <a class="nav-link pe-0 me-0" href="/dashboard/<%=currUser._id%>?role=<%=currUser.role%>"><i class="fa-solid fa-user"></i></a>
           
         <%}%>
         

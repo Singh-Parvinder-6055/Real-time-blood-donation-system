@@ -27,53 +27,61 @@
         <input name="user[role]" value="donor" hidden>
 
         <div class="row">
-          <div class="col-md-6 mb-3">
-            <label>Full Name</label>
-            <input class="form-control" name="user[name]" required>
-          </div>
-          <div class="col-md-6 mb-3">
-            <label>Username</label>
-            <input class="form-control" name="user[username]" required>
+          <div class="col-md-12 mb-3">
+            <label class="form-label" for="name">Full Name</label>
+            <input class="form-control" name="user[name]" id="name" required>
           </div>
         </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label" for="username">Username</label>
+            <input class="form-control" name="user[username]" id="username" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label"for="password">Password</label>
+            <input type="password" class="form-control" name="user[password]" id="password" required>
+          </div>
+        </div>
+
 
         <div class="mb-3">
-          <label>Email</label>
-          <input type="email" class="form-control" name="user[email]" required>
+          <label class="form-label" for="email">Email</label>
+          <input type="email" class="form-control" name="user[email]" id="email" required>
         </div>
 
         <div class="row">
+          
           <div class="col-md-6 mb-3">
-            <label>Password</label>
-            <input type="password" class="form-control" name="user[password]" required>
+            <label class="form-label" for="age">Age</label>
+            <input type="number" class="form-control" id="age" name="user[age]" min="16" required>
           </div>
-          <div class="col-md-3 mb-3">
-            <label>Age</label>
-            <input type="number" class="form-control" name="user[age]" min="16" required>
-          </div>
-          <div class="col-md-3 mb-3">
-            <label>Phone</label>
-            <input type="number" class="form-control" name="user[phone]" required>
+          <div class="col-md-6 mb-3">
+            <label class="form-label" for="phone">Phone</label>
+            <input type="number" class="form-control" name="user[phone]" id="phone" required>
           </div>
         </div>
 
         <div class="row">
-          <div class="col-md-6 mb-3">
-            <label>Country</label>
-            <input class="form-control" name="user[country]" required>
+          <div class="col-md-4 mb-3">
+            <label class="form-label" for="country">Country</label>
+            <input id="country" class="form-control" name="user[country]" required>
           </div>
-          <div class="col-md-6 mb-3">
-            <label>City</label>
-            <input class="form-control" name="user[city]" required>
+          <div class="col-md-4 mb-3">
+            <label class="form-label" for="city">City</label>
+            <input id="city" class="form-control" name="user[city]" required>
+          </div>
+          <div class="col-md-4 mb-3">
+            <label class="form-label" for="pincode">Pincode</label>
+            <input id="pincode" class="form-control" name="user[pincode]" required>
           </div>
         </div>
 
-        <label class="mt-3 mb-2">Blood Group</label>
+        <label for="bloodGroup" class=" form-label mt-3 mb-2">Blood Group</label>
 
         <div class="blood-grid">
           <% ["A+","A-","B+","B-","AB+","AB-","O+","O-"].forEach(bg => { %>
             <label class="blood-pill">
-              <input type="radio" name="user[bloodGroup]" value="<%= bg %>" required>
+              <input id="bloodGroup" type="radio" name="user[bloodGroup]" value="<%= bg %>" required>
               <span><%= bg %></span>
             </label>
           <% }) %>
