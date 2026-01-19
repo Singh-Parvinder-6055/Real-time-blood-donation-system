@@ -11,6 +11,6 @@ NOTE: If you don't have an account on cloudinay, create one first.
 
 Fill the  details of your cloudinary account in .env  as follows:
 
-CLOUD_NAME=
-CLOUD_API_KEY=
-CLOUD_API_SECRET=
+1. CLOUD_NAME=
+2. CLOUD_API_KEY=
+3. CLOUD_API_SECRET=
