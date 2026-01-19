@@ -334,12 +334,10 @@
 
 /* INFO STRIP */
 .info-strip {
-  background: rgba(255,255,255,0.15);
   display: inline-block;
-  padding: 8px 18px;
-  border-radius: 30px;
-  font-weight: 600;
   margin-bottom: 20px;
+  font-size: 1.5rem;
+  font-weight: 300;
 }
 
 /* HEADING */
@@ -409,6 +407,7 @@
 
 .blood-pill input:checked + span {
   background: #d90429;
+  border-radius: 12px;
   color: white;
 }
 
@@ -451,6 +450,7 @@
 .org-pill input:checked + span {
   background: #d90429;
   color: white;
+  border-radius: 12px;
 }
 
 /* Mobile */

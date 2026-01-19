@@ -1,14 +1,12 @@
-
-
 <% layout("layouts/boilerplate") %>
 
 <section class="signup-hero">
   <div class="container">
 
-   
-    <div class="info-strip">
-      🏥 Partner With Us
-    </div>
+    <!-- Info strip (same as homepage) -->
+    <p class="info-strip">
+      🏥 Associate With Us
+    </p>
 
     <!-- Heading -->
     <div class="signup-heading">
@@ -45,4 +43,50 @@
 
         <div class="mb-3">
           <label>Email</label>
-          <input type="email" class="form-control" name="
+          <input type="email" class="form-control" name="user[email]" required>
+        </div>
+
+        <div class="mb-3">
+          <label>Phone</label>
+          <input type="number" class="form-control" name="user[phone]" required>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label>Country</label>
+            <input class="form-control" name="user[country]" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label>City</label>
+            <input class="form-control" name="user[city]" required>
+          </div>
+        </div>
+
+        <label class="mt-3 mb-2">Organization Type</label>
+
+        <div class="org-type-grid">
+          <label class="org-pill">
+            <input type="radio" name="user[organizationType]" value="hospital" required>
+            <span>🏥 Hospital</span>
+          </label>
+
+          <label class="org-pill">
+            <input type="radio" name="user[organizationType]" value="blood-bank" required>
+            <span>🩸 Blood Bank</span>
+          </label>
+
+          <label class="org-pill">
+            <input type="radio" name="user[organizationType]" value="ngo" required>
+            <span>🤝 NGO</span>
+          </label>
+        </div>
+
+        <button class="cta-btn mt-4 w-100">
+          Register Organization
+        </button>
+
+      </form>
+    </div>
+
+  </div>
+</section>
