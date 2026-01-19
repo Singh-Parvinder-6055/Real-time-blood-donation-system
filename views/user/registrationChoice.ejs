@@ -1,8 +1,61 @@
+
 <% layout("layouts/boilerplate") %>
-    <div class="row offset-4">
-        <a href="/signup?role=donor">Register as a Donor</a>
-        <a href="/signup?role=patient">Register as a Patient</a>
-        <a href="/signup?role=organization">Register as an Organization</a>
+
+<section class="role-section">
+    <a href="/" class="back-home-btn">
+  <i class="fa-solid fa-arrow-left"></i> Back to Home
+</a>
+
+  <div class="container text-center">
+
+    <span class="badge emergency-badge mb-3">
+      Quick Registration
+    </span>
+
+    <h1 class="main-title mb-3">
+      Choose How You Want to Help
+    </h1>
+
+    <p class="subtitle mb-5">
+      Join our real-time blood donation platform and save lives
+    </p>
+
+    <div class="row justify-content-center g-4">
+
+      <!-- Donor -->
+      <div class="col-md-4">
+        <a href="/signup?role=donor" class="text-decoration-none">
+          <div class="role-card">
+            <i class="fa-solid fa-hand-holding-droplet"></i>
+            <h4>Donor</h4>
+            <p>Donate blood and save lives in emergencies</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Patient -->
+      <div class="col-md-4">
+        <a href="/signup?role=patient" class="text-decoration-none">
+          <div class="role-card">
+            <i class="fa-solid fa-user-injured"></i>
+            <h4>Patient</h4>
+            <p>Find blood donors instantly when needed</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Organization -->
+      <div class="col-md-4">
+        <a href="/signup?role=organization" class="text-decoration-none">
+          <div class="role-card">
+            <i class="fa-solid fa-hospital"></i>
+            <h4>Organization</h4>
+            <p>Manage blood camps and emergency requests</p>
+          </div>
+        </a>
+      </div>
+
     </div>
-</body>
-</html>
+
+  </div>
+</section>

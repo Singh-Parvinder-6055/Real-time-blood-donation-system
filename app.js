@@ -59,6 +59,7 @@ app.use((req,res,next)=>{
     res.locals.currUser=req.user;
     res.locals.success=req.flash("success");
     res.locals.error=req.flash("error");
+    res.locals.hideNavbar=false;
     next();
 })
 app.get("/",(req,res)=>{

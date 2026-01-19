@@ -7,9 +7,11 @@ const {isLoggedIn}=require("../middlewares.js");
 
 
 router.get("/signup",(req,res)=>{
+
     
     let {role}=req.query;
     if(!role){
+        res.locals.hideNavbar=true;
         return res.render("user/registrationChoice.ejs");
     }
     if(role=="donor"){
