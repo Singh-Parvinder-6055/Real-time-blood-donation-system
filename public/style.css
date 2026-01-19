@@ -497,3 +497,72 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* login page */
+
+/* ===== AUTH PAGES (Login / Signup) ===== */
+
+.auth-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #8b0000, #c1121f);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 420px;
+  padding: 2.5rem;
+  border-radius: 18px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+}
+
+.auth-title {
+  text-align: center;
+  font-weight: 700;
+  color: #8b0000;
+  margin-bottom: 0.3rem;
+}
+
+.auth-subtitle {
+  text-align: center;
+  color: #6c757d;
+  margin-bottom: 1.8rem;
+  font-size: 0.95rem;
+}
+
+.auth-input {
+  padding: 0.7rem 0.9rem;
+  border-radius: 10px;
+}
+
+.auth-btn {
+  background-color: #c1121f;
+  color: #fff;
+  border-radius: 12px;
+  padding: 0.65rem;
+  font-weight: 600;
+  border: none;
+  transition: 0.3s ease;
+}
+
+.auth-btn:hover {
+  background-color: #8b0000;
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 1.2rem;
+}
+
+.back-home {
+  text-decoration: none;
+  color: #8b0000;
+  font-weight: 500;
+}
+
+.back-home:hover {
+  text-decoration: underline;
+}
