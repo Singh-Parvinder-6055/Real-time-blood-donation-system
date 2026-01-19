@@ -9,7 +9,10 @@
     <link href="/style.css" rel="stylesheet">
 </head>
 <body>
-<%- include("../includes/navbar.ejs")%>
+    <%if(!hideNavbar){%>
+    <%- include("../includes/navbar.ejs")%>
+    <%}%>
+
     <div>
         <%- include("../includes/flash.ejs")%>
         <%-body-%>
