@@ -1,0 +1,16 @@
+<body> 
+    <h3>All Active Emergencies</h3>
+    <div >
+     <%for(emergency of activeEmergencies) {%>
+       
+                <div >
+                    <p ><b><%=emergency.urgencyLevel%></b></p>
+                    <p ><%=emergency.city%></p>
+                    <p ><%=emergency.status%></p>                
+                </div>
+                
+        </div>
+       </a>        
+    <%}%>
+    </div>
+</body>

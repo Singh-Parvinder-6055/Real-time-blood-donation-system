@@ -1,0 +1,17 @@
+<body> 
+    <h3>All Upcomming Blood-donation Camps</h3>
+    <div >
+     <%for(camp of upcomingCamps) {%>
+       
+                <div >
+                    <p ><b><%=camp.title%></b></p>
+                    <p ><%=camp.city%></p>
+                    <p ><%=camp.startDateTime.toString().split(" ").slice(0,4).join(" ")%></p> 
+                    <p ><%=camp.organizer.name%></p>               
+                </div>
+                
+        </div>
+       </a>        
+    <%}%>
+    </div>
+</body>
