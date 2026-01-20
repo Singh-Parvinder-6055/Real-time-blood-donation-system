@@ -1,10 +1,25 @@
 <%layout ("layouts/boilerplate")%>
 <div class="dashboard-container">
-    <h2>Admin Dashboard</h2>
+    <div class="row">
+        <h2 class="col-sm-4">Organization Dashboard</h2>
+        <%if(user.verification && user.verification.verificationStatus=="approved"){%>
+                    <span class="badge col-sm-2 mt-2 verification rounded-pill text-bg-success">Verified <i class="fa-regular fa-circle-check"></i></span>
+        <%}%>
+        <%if(user.verification && user.verification.verificationStatus=="rejected"){%>
+                    <span class="badge col-sm-2 mt-2 verification-status rounded-pill text-bg-danger">Verification Request Rejected <i class="fa-solid fa-ban"></i></span>
+        <%}%>
+        <%if(user.verification && user.verification.verificationStatus=="pending"){%>
+                    <span class="badge col-sm-2 mt-2 verification-status rounded-pill text-bg-warning">Verification Pending      <i class="fa-solid fa-hourglass-end"></i></span>
+        <%}%>
+        <%if(!user.verification){%>
+                    <span class="badge col-sm-2 mt-2 verification-status rounded-pill text-bg-warning">Verification Request Not Raised</span>
+        <%}%>
+    </div>
     <p class="blur"><i>Track your activity in this dashboard</i></p>
     <div class="container-fluid mt-4">
-    <h5 class="mb-4">Hey <%=currUser.username%>  &#x1F44B;</h5>
-
+        
+                <h5 class="mb-4">Hey <%=currUser.username%>  &#x1F44B;</h5>
+                
     <ul class="nav nav-tabs shadow-sm" id="adminTab" role="tablist">
         <li class="nav-item">
             <button class="nav-link active" id="camps-tab" data-bs-toggle="tab" data-bs-target="#camps" type="button">My Camps</button>

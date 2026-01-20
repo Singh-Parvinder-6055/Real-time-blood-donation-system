@@ -38,6 +38,7 @@ module.exports.createEmergency=async(req,res)=>{
         emergency.requestedBy=currUser._id.toString();
         emergency.patient=patientExists._id.toString();
         emergency.city=currUser.city;
+        emergency.pincode=currUser.pincode;
         
         //emergency.createdAt= new Date();
         let { error } = emergencySchema.validate(emergency);

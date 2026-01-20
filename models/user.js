@@ -85,7 +85,7 @@ const userSchema = new Schema({
   },
   verification: {
   type: Schema.Types.ObjectId,
-  ref: "OrganizationVerification",
+  ref: "Verification",
   default: null
 }
 

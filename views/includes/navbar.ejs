@@ -16,7 +16,7 @@
         </button>
         <!-- <a class="nav-link" href="/emergency"></a> -->
         <a class="nav-link" href="/camp">Organize a Camp</a>
-          <%if(currUser&& currUser.role=="organization"){%>
+          <%if(currUser&& currUser.role=="organization" &&!currUser.verification){%>
             <a class="nav-link" href="/getVerified">Get Verified</a>
           <%}%>
           
@@ -28,12 +28,22 @@
             </i> Emergency Requirements</a>
           </button>  
         <%}%>
-        <a class=" howItWorks nav-link">How it works? </a>
+        <a class="nav-link">How it works? </a>
         <%if(currUser && currUser.role=="admin"){%>
           <a class="nav-link" href="/verify">Verify Organizations</a>
         <%}%>
-        <a class=" howItWorks nav-link" href="/activeEmergencies">Active Emergenies </a>
-        <a class=" howItWorks nav-link" href="/upcomingCamps">Find Donation Camps </a>
+        <%if(!currUser){%>
+          <form class="d-flex needs-validation" method="get" action="/activeEmergencies" role="search" novalidate>
+              <input class="form-control me-2" type="search" name="pincode" placeholder="Enter your city's pincode" aria-label="Search" required/>
+              <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        <%}%>
+        
+        <%if(currUser){%>
+            <a class=" nav-link" href="/activeEmergencies/<%=currUser._id%>">Active Emergenies </a>
+            <a class=" nav-link" href="/upcomingCamps/<%=currUser._id%>">Find Donation Camps </a>
+        <%}%>
+        
       </div>
       <div class="navbar-nav ms-auto">
         

@@ -89,6 +89,7 @@ module.exports.emergencySchema = Joi.object({
   patient: Joi.string().required(),
 
   city: Joi.string().required(),
+  pincode:Joi.string().max(10).required(),
 
   status: Joi.string()
     .valid("open", "fulfilled", "closed")
@@ -121,6 +122,7 @@ module.exports.campSchema = Joi.object({
   city: Joi.string()
     .min(2)
     .required(),
+  pincode: Joi.string().max(10).required(),
 
   startDateTime: Joi.date() 
     .greater("now")   //should be greater than now
@@ -134,7 +136,7 @@ module.exports.campSchema = Joi.object({
     .required(),
 
   status: Joi.string()
-    .valid("upcoming", "ongoing", "completed", "cancelled")
+    .valid("upcoming", "ongoing", "completed")
     .optional(),
 
   registeredDonors: Joi.array()

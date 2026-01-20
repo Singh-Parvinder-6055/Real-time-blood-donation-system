@@ -15,6 +15,7 @@ const ejsMate=require("ejs-Mate");
 const flash=require("connect-flash");
 const ExpressError=require("./utils/ExpressError");
 const methodOverride=require("method-override");
+const Emergency=require("./models/emergency.js");
 
 
 app.set("view engine","ejs");
@@ -65,15 +66,13 @@ app.use((req,res,next)=>{
     res.locals.hideNavbar=false;
     next();
 })
-app.get("/",(req,res)=>{
-    // if(req.session.count){
-    //     req.session.count++;
-    //     }
-    // else{
-    //     req.session.count=1;
-    // }
-    // res.send(`you sent request ${req.session.count} times`);
-res.render("common/index.ejs");
+
+//home route
+app.get("/", async (req,res)=>{
+    let activeEmergencies= await Emergency.find();
+    let totalActiveEmergencies=activeEmergencies.length;
+    
+res.render("common/index.ejs",{totalActiveEmergencies});
 });
 
 app.use("/",userRouter);

@@ -16,6 +16,10 @@
       type: String,
       required: true
     },
+    pincode:{
+      type:String,
+      required:true
+    },
 
     startDateTime: {
       type: Date,
@@ -35,7 +39,7 @@
 
     status: {
       type: String,
-      enum: ["upcoming", "ongoing", "completed", "cancelled"],
+      enum: ["upcoming", "ongoing", "completed"],
       default: "upcoming"
     },
 

@@ -125,7 +125,8 @@ module.exports.visitDashboard=async(req,res)=>{
         if(role=="organization"){
             let user= await User.findById(id)
             .populate({path:"camps"})//.populate({path:"camps",populate:{path:"organizer"}})
-            .populate({path: "emergencies",populate:{ path: "patient" }});
+            .populate({path: "emergencies",populate:{ path: "patient" }})
+            .populate({path:"verification"});
         return res.render("dashboards/organizationDashboard.ejs",{user});
         }
 

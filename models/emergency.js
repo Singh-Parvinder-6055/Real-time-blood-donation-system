@@ -37,6 +37,10 @@ const emergencyRequirementSchema = new Schema({
     type: String,
     required: true
   },
+  pincode:{
+    type:String,
+    required:true
+  },
 
   status: {
     type: String,
