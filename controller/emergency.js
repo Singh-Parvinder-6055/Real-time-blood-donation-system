@@ -1,15 +1,24 @@
 const Emergency=require("../models/emergency.js");
 const User=require("../models/user.js");
 const {emergencySchema}=require("../Schema.js");
+const ExpressError=require("../utils/ExpressError.js");
+
+
 
 module.exports.renderCreateEmergencyForm=(req,res)=>{
+    req.session.redirectUrl="/";
     res.render("emergency/createEmergency.ejs");
 };
 
 module.exports.createEmergency=async(req,res)=>{
-    try{
+    req.session.redirectUrl="/emergency";
+    
         
         let currUser= await User.findById(req.user._id);
+        if(!currUser){
+            req.flash("error","User not found");
+            res.redirect("/emergency");
+        }
         let emergency=req.body.emergency;
         let patientUsername=emergency.patient;
         let patientExists= await User.findOne({username:patientUsername});
@@ -32,9 +41,13 @@ module.exports.createEmergency=async(req,res)=>{
         
         //emergency.createdAt= new Date();
         let { error } = emergencySchema.validate(emergency);
-                if (error) {
-                    return res.status(400).send(error);
-                }
+        if(error){
+            let errMsg=error.details.map(el=>el.message).join(",");
+            //console.log(errMsg);
+    
+        throw new ExpressError(400,errMsg);
+        }
+
         let newEmergency= new Emergency(emergency);
         patientExists.emergencies.push(newEmergency);
         
@@ -44,8 +57,5 @@ module.exports.createEmergency=async(req,res)=>{
         await currUser.save();
         req.flash("success","Emergency Blood requirement Created Successfully!");
         res.redirect("/");
-    }
-    catch(err){
-        res.send(err);
-    }
+   
 };

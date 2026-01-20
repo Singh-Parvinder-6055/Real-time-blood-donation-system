@@ -25,7 +25,7 @@
         <div class="tab-pane fade show active" id="camps" role="tabpanel">
             <h4>Camps Organized by Me</h4>
             <%if(user.camps.length){%>
-
+        <div class="table-responsive">
             <table class="table">
                 <thead class="table-light">
                 <tr>
@@ -33,7 +33,7 @@
                     <th>Date</th>
                     <th>Location</th>
                 </tr>
-            </thead>
+                </thead>
             <tbody>
                 <% for(let camp of user.camps) { %>
                 <tr>
@@ -43,7 +43,8 @@
                 </tr>
                 <% } %>
             </tbody>
-                </table>
+            </table>
+        </div>
                 <%}else{%>
                     <div class="alert alert-secondary text-center">
                          You did not organize any camp.
@@ -55,7 +56,7 @@
         <div class="tab-pane fade" id="emergency" role="tabpanel">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4>My Emergency Requests</h4>
-        <a href="/emergency/new" class="btn btn-sm btn-warning">Create New Emergency</a>
+        
     </div>
 
     <% if (user.emergencies.length) { %>
@@ -68,7 +69,7 @@
                         <th class="text-center">Units</th>
                         <th class="text-center">Hospital</th>
                         <th class="text-center">Status</th>
-                        <th class="text-center">Actions</th>
+                        <!-- <th class="text-center">Actions</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -85,11 +86,7 @@
                                 <span class="badge bg-warning">Open</span>
                             <% } %>
                         </td>
-                        <td class="text-center">
-                            <form action="/emergency/<%= req._id %>/fulfill?_method=PATCH" method="POST" style="display:inline;">
-                                <button class="btn btn-sm btn-outline-success">Done</button>
-                            </form>
-                        </td>
+                        
                     </tr>
                     <% } %>
                 </tbody>
@@ -105,6 +102,7 @@
         <div class="tab-pane fade" id="verified" role="tabpanel">
             <h4>All Verified Organizations</h4>
             <%if(verifiedOrgs.length){%>
+        <div class="table-responsive">
             <table class="table table-hover">
             
             <thead class="table-success text-white">
@@ -112,6 +110,7 @@
                     <th>Org Name</th>
                     <th>City</th>
                     <th>Contact</th>
+                    <th class="text-center">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -120,10 +119,12 @@
                     <td><%= org.organization.username %></td>
                     <td><%= org.organization.city %></td>
                     <td><%= org.organization.phone %></td>
+                    <td class="text-center"> <a class="reviewVerification" href="/verification/<%=org._id%>">review</a></td>
                 </tr>
                 <% } %>
             </tbody>
-        </table>
+            </table>
+        </div>
         <%}else{%>
             <div class="alert alert-secondary text-center">
                     No Organization is Verified.
@@ -135,13 +136,14 @@
             <h4>Organizations With Rejected Verification requests</h4>
             
             <%if(rejectedOrgs.length){%>
-
+        <div class="table-responsive">
             <table class="table table-hover">                
             <thead class="table-dark">
                 <tr>
                     <th>Org Name</th>
                     <th>City</th>
                     <th>Reason</th>
+                    <th class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -150,11 +152,13 @@
                     <td><%= org.organization.username %></td>
                     <td><%= org.organization.city %></td>
                     <td class="text-danger small"><%= org.rejectionReason %></td>
+                    <td class="text-center"> <a class="reviewVerification" href="/verification/<%=org._id%>">review</a></td>
                 </tr>
                 <% } %>
             </tbody>
-            
-        </table>
+
+            </table>
+        </div>
             <%}else{%>
             <div class="alert alert-secondary text-center">
                     No organization got verification request rejected.

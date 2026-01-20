@@ -573,10 +573,14 @@
 .reviewVerification{
   color:white;
   background-color:#0d6efd;  
+  text-decoration:none;
   padding:0.3rem 0.7rem;
   border-radius:0.5rem;
    
 }
+/* .reviewVerification:hover{
+  padding:0.
+} */
 
 .verification-cards{
     /* border:none !important; */

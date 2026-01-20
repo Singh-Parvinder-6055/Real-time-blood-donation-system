@@ -94,8 +94,10 @@ app.use((err,req,res,next)=>{
     //console.log("newError");
     //res.send("Error");
     let{status=500,message="Something went wrong"}=err;
-    
-    res.status(status).render("common/error.ejs",{message});
+    req.flash("error",err.message);
+    redirectUrl=req.session.redirectUrl ||"/"
+    res.redirect(redirectUrl);
+    //res.status(status).render("common/error.ejs",{message});
     
     //next(err.message);
 });

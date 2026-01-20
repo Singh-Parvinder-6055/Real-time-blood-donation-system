@@ -1,9 +1,11 @@
 const { userSchema } = require("../Schema.js");
 const User=require("../models/user.js");
 const Verification = require("../models/verification.js");
+const ExpressError=require("../utils/ExpressError.js");
 
 
 module.exports.renderSignUpForm=(req,res)=>{
+    req.session.redirectUrl="/";
 
 
 let {role}=req.query;
@@ -25,16 +27,21 @@ return res.render("user/signupOrganization.ejs");
 };
 
 
-module.exports.signUpUser=async(req,res)=>{
-try{
+module.exports.signUpUser=async(req,res,next)=>{
+    req.session.redirectUrl="/signup";
+
     
     let { error } = userSchema.validate(req.body.user);
-    if (error) {
-        return res.status(400).send(error);
+    if(error){
+        let errMsg=error.details.map(el=>el.message).join(",");
+        //console.log(errMsg);
+    
+        throw new ExpressError(400,errMsg);
     }
     let password = req.body.user.password;
 
     let newUser = new User(req.body.user);
+
 let registeredUser= await User.register(newUser, password);
     //console.log(registeredUser);
     req.login(registeredUser,(err)=>{ //this method is used to login a user afer a successfull signup
@@ -44,13 +51,11 @@ let registeredUser= await User.register(newUser, password);
         req.flash("success","Welcome to Blood-Connect!");
         res.redirect("/");
     })
-}catch(err){
-    req.flash("error",err.message);
-    res.redirect("/signup");
-}   
+  
 };
 
 module.exports.renderLoginForm=(req,res)=>{
+    req.session.redirectUrl="/";
     res.locals.hideNavbar=true;
     res.render("user/login.ejs");
 };
@@ -62,6 +67,7 @@ module.exports.loginUser=(req,res)=>{
 };
 
 module.exports.logOutUser=(req,res,next)=>{
+        req.session.redirectUrl="/";
         req.logout((err)=>{
         if(err){    
             return next(err);
@@ -74,20 +80,29 @@ module.exports.logOutUser=(req,res,next)=>{
 };
 
 module.exports.visitDashboard=async(req,res)=>{
+        
+        req.session.redirectUrl="/";
         let {id}=req.params;
         let {role}=req.query;
+        req.session.dashboardRedirect=`/dashboard/${id}?role=${role}`;
         if(!role){
-            res.locals.hideNavbar=true;
-            return res.render("/");
+            // res.locals.hideNavbar=true;
+            res.redirect("/");
         }
         if(role=="donor"){
             let user= await User.findById(id)
+            
             .populate({path:"camps",populate:{path:"organizer"}})
             .populate({path: "emergencies",populate: [
                         { path: "requestedBy" }, 
                         { path: "patient" }
                     ]
             });
+
+            if(!user){
+                req.flash("error","Donor not found");
+                res.redirect("/");
+            }
 
             return res.render("dashboards/donorDashboard.ejs",{user});
             
@@ -100,23 +115,29 @@ module.exports.visitDashboard=async(req,res)=>{
                         { path: "patient" }
                     ]
             });
-
+            if(!user){
+                req.flash("error","Patient not found");
+                res.redirect("/");
+            }
             return res.render("dashboards/patientDashboard.ejs",{user});
         }
 
         if(role=="organization"){
-        return res.render("dashboards/organizationDashboard.ejs");
+            let user= await User.findById(id)
+            .populate({path:"camps"})//.populate({path:"camps",populate:{path:"organizer"}})
+            .populate({path: "emergencies",populate:{ path: "patient" }});
+        return res.render("dashboards/organizationDashboard.ejs",{user});
         }
-        
+
         if(role=="admin"){
             let user= await User.findById(id)
-            .populate({path:"camps",populate:{path:"organizer"}})
-            .populate({path: "emergencies",populate: [
-                        { path: "requestedBy" }, 
-                        { path: "patient" }
-                    ]
-            });
+            .populate({path:"camps"})//.populate({path:"camps",populate:{path:"organizer"}})
+            .populate({path: "emergencies",populate:{ path: "patient" }});
             
+            if(!user){ 
+                req.flash("error","Admin not found");
+                res.redirect("/");
+            }
 
             let rejectedOrgs= await Verification.find({verificationStatus:"rejected"}).populate({path:"organization"});
             let verifiedOrgs=await Verification.find({verificationStatus:"approved"}).populate({path:"organization"});
