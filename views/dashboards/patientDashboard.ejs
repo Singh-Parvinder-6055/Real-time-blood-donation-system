@@ -1,5 +1,70 @@
 <%layout ("layouts/boilerplate")%>
 <div class="dashboard-container">
-    <h4>Hey <%=currUser.username%>  &#x1F44B;</h4>
-    <p class="blur"><i>Get well soon! </i></p>
+    <h2>Patient Dashboard</h2>
+    <p class="blur"><i>In this dashboard, track emergency blood request raised for you  </i></p>
+    <div class="container-fluid mt-4">
+    <h5 class="mb-4">Hey <%=currUser.username%>  &#x1F44B;</h5>
+
+    <ul class="nav nav-tabs shadow-sm" id="adminTab" role="tablist">
+
+        <li class="nav-item">
+            <button class="nav-link active" id="emergency-tab" data-bs-toggle="tab" data-bs-target="#emergency" type="button">Emergency Blood Requests For You</button>
+        </li>
+       
+    </ul>
+
+    <div class="tab-content border border-top-0 p-4 bg-white shadow-sm" id="adminTabContent">     
+        
+        <div class="tab-pane fade show active" id="emergency" role="tabpanel">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>Emergency Blood requests raised for you</h4>
+    </div>
+
+    <% if (user.emergencies.length) { %>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-warning">
+                    <tr>
+                        <th class="text-center">Patient/Case</th>
+                        <th class="text-center">Blood Group</th>
+                        <th class="text-center">Units</th>
+                        <th class="text-center">Hospital</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Created On</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let req of user.emergencies) { %>
+                    <tr class="align-middle">
+                        <td class="text-center"><strong><%= req.patient.username %></strong></td>
+                        <td class="text-center"><span class="badge bg-danger"><%= req.bloodGroup %></span></td>
+                        <td class="text-center"><%= req.unitsRequired %> Units</td>
+                        <td class="text-center"><%= req.requestedBy.username %></td>
+                        <td class="text-center">
+                            <% if(req.isFulfilled) { %>
+                                <span class="badge bg-success">Fulfilled</span>
+                            <% } else { %>
+                                <span class="badge bg-warning">Open</span>
+                            <% } %>
+                        </td>
+                        <td class="text-center"><%=req.createdAt.toString().split(" ").slice(0,4).join(" ")%></td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    <% } else { %>
+        <div class="alert alert-secondary text-center">
+            No emergency blood request is raised for you yet.
+        </div>
+    <% } %>
 </div>
+      
+
+    </div>
+</div>
+    
+</div>
+
+
+

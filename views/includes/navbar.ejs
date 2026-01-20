@@ -21,6 +21,13 @@
           <%}%>
           
         <%}%>
+        <%if(currUser && currUser.role=="patient"){%>
+          <button class="ebutton">
+            <a class="nav-link " id="emergencyTruck" href="/dashboard/<%=currUser._id%>?role=<%=currUser.role%>">
+            <i class="fa-solid fa-truck-medical">
+            </i> Emergency Requirements</a>
+          </button>  
+        <%}%>
         <a class=" howItWorks nav-link">How it works? </a>
         <%if(currUser && currUser.role=="admin"){%>
           <a class="nav-link" href="/verify">Verify Organizations</a>

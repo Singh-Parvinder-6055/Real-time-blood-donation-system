@@ -1,18 +1,169 @@
 <%layout ("layouts/boilerplate")%>
 <div class="dashboard-container">
-    <h4>Hey <%=currUser.username%>  &#x1F44B;</h4>
+    <h2>Admin Dashboard</h2>
     <p class="blur"><i>Track your activity in this dashboard</i></p>
-    <%if(user.camps.length){%>
-        <%for(camp of user.camps){%>
-        <p><%=camp.startDateTime%></p>
-    <%}%>
-    <%}%>
-<br>
-    <%if(user.emergencies.length){%>
-        <%for(emergency of user.emergencies){%>
-        <p><%=emergency.status%></p>
-    <%}%>
-    <%}%>
+    <div class="container-fluid mt-4">
+    <h5 class="mb-4">Hey <%=currUser.username%>  &#x1F44B;</h5>
+
+    <ul class="nav nav-tabs shadow-sm" id="adminTab" role="tablist">
+        <li class="nav-item">
+            <button class="nav-link active" id="camps-tab" data-bs-toggle="tab" data-bs-target="#camps" type="button">My Camps</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" id="emergency-tab" data-bs-toggle="tab" data-bs-target="#emergency" type="button">Emergencies</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" id="verified-tab" data-bs-toggle="tab" data-bs-target="#verified" type="button">Verified Orgs</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" id="rejected-tab" data-bs-toggle="tab" data-bs-target="#rejected" type="button">Rejected Orgs</button>
+        </li>
+    </ul>
+
+    <div class="tab-content border border-top-0 p-4 bg-white shadow-sm" id="adminTabContent">
+        
+        <div class="tab-pane fade show active" id="camps" role="tabpanel">
+            <h4>Camps Organized by Me</h4>
+            <%if(user.camps.length){%>
+
+            <table class="table">
+                <thead class="table-light">
+                <tr>
+                    <th>Camp Name</th>
+                    <th>Date</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let camp of user.camps) { %>
+                <tr>
+                    <td><%= camp.title %></td>
+                    <td><%= camp.startDateTime.toDateString() %></td>
+                    <td><%= camp.city %></td>
+                </tr>
+                <% } %>
+            </tbody>
+                </table>
+                <%}else{%>
+                    <div class="alert alert-secondary text-center">
+                         You did not organize any camp.
+                    </div>
+                <%}%>
+        </div>
+       
+        
+        <div class="tab-pane fade" id="emergency" role="tabpanel">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>My Emergency Requests</h4>
+        <a href="/emergency/new" class="btn btn-sm btn-warning">Create New Emergency</a>
+    </div>
+
+    <% if (user.emergencies.length) { %>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-warning">
+                    <tr>
+                        <th class="text-center">Patient/Case</th>
+                        <th class="text-center">Blood Group</th>
+                        <th class="text-center">Units</th>
+                        <th class="text-center">Hospital</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let req of user.emergencies) { %>
+                    <tr class="align-middle">
+                        <td class="text-center"><strong><%= req.patient.username %></strong></td>
+                        <td class="text-center"><span class="badge bg-danger"><%= req.bloodGroup %></span></td>
+                        <td class="text-center"><%= req.unitsRequired %> Units</td>
+                        <td class="text-center"><%= req.requestedBy.username %></td>
+                        <td class="text-center">
+                            <% if(req.isFulfilled) { %>
+                                <span class="badge bg-success">Fulfilled</span>
+                            <% } else { %>
+                                <span class="badge bg-warning">Open</span>
+                            <% } %>
+                        </td>
+                        <td class="text-center">
+                            <form action="/emergency/<%= req._id %>/fulfill?_method=PATCH" method="POST" style="display:inline;">
+                                <button class="btn btn-sm btn-outline-success">Done</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    <% } else { %>
+        <div class="alert alert-secondary text-center">
+            No active emergency requests created by you.
+        </div>
+    <% } %>
+</div>
+
+        <div class="tab-pane fade" id="verified" role="tabpanel">
+            <h4>All Verified Organizations</h4>
+            <%if(verifiedOrgs.length){%>
+            <table class="table table-hover">
+            
+            <thead class="table-success text-white">
+                <tr>
+                    <th>Org Name</th>
+                    <th>City</th>
+                    <th>Contact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let org of verifiedOrgs) { %>
+                <tr>
+                    <td><%= org.organization.username %></td>
+                    <td><%= org.organization.city %></td>
+                    <td><%= org.organization.phone %></td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+        <%}else{%>
+            <div class="alert alert-secondary text-center">
+                    No Organization is Verified.
+            </div>
+            <%}%>
+            </div>
+
+        <div class="tab-pane fade" id="rejected" role="tabpanel">
+            <h4>Organizations With Rejected Verification requests</h4>
+            
+            <%if(rejectedOrgs.length){%>
+
+            <table class="table table-hover">                
+            <thead class="table-dark">
+                <tr>
+                    <th>Org Name</th>
+                    <th>City</th>
+                    <th>Reason</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let org of rejectedOrgs) { %>
+                <tr>
+                    <td><%= org.organization.username %></td>
+                    <td><%= org.organization.city %></td>
+                    <td class="text-danger small"><%= org.rejectionReason %></td>
+                </tr>
+                <% } %>
+            </tbody>
+            
+        </table>
+            <%}else{%>
+            <div class="alert alert-secondary text-center">
+                    No organization got verification request rejected.
+            </div>
+            <%}%>
+            </div>
+
+    </div>
+</div>
     
 </div>
 

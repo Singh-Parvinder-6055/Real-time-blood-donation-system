@@ -46,7 +46,7 @@ const userSchema = new Schema({
   age: Number,
 
   //---for patient only----
-  medicalNotes: String,
+  
 
   // ---------- Organization ----------
   organizationType: {

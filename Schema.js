@@ -99,6 +99,7 @@ module.exports.emergencySchema = Joi.object({
     then: Joi.string().required(),
     otherwise: Joi.forbidden()
   }),
+  emergencyReason:Joi.string().max(12).required(),
 
   fulfilledOn: Joi.when("status", {
     is: "fulfilled",
@@ -112,6 +113,7 @@ module.exports.emergencySchema = Joi.object({
 
 
 module.exports.campSchema = Joi.object({
+  title:Joi.string().max(20).required(),
   country: Joi.string()
     .min(2)
     .required(),
@@ -173,9 +175,9 @@ module.exports.verificationSchema = Joi.object({
 
   verifiedAt: Joi.date().optional(),
 
-  rejectionReason: Joi.when("verificationStatus", {
-    is: "rejected",
-    then: Joi.string().min(5).required(),
-    otherwise: Joi.forbidden()
-  })
+  // rejectionReason: Joi.when("verificationStatus", {
+  //   is: "rejected",
+  //   then: Joi.string().min(5).required(),
+  //   otherwise: Joi.forbidden()
+  // })
 });

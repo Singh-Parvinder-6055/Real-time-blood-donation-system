@@ -47,6 +47,7 @@ const emergencyRequirementSchema = new Schema({
     type:Schema.Types.ObjectId,
     ref:"User"
   },
+  emergencyReason: String,
   fulfilledOn:Date,
 
 //   requiredBy: {

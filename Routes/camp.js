@@ -2,27 +2,14 @@ const express=require("express");
 const router=express.Router();
 const {isVerified}=require("../middlewares");
 const {isLoggedIn}=require("../middlewares");
-const Camp=require("../models/camp");
-const {campSchema}=require("../Schema");
+const campController=require("../controller/camp.js");
+const wrapAsync=require("../utils/wrapAsync");
 
-router.get("/camp",isLoggedIn,isVerified,(req,res)=>{
-    res.render("camp/createCamp.ejs");
-});
 
-router.post("/camp",isLoggedIn,isVerified,async(req,res)=>{
-    let camp=req.body.camp;
-    camp.organizer=req.user._id.toString();
-    let {error}=campSchema.validate(camp);
-    if(error){
-        return res.status(400).send(error);
-    }
-    let newCamp= await new Camp(camp);
-    req.user.camps.push(newCamp);
-    await req.user.save();
-    await newCamp.save();
-    req.flash("success","Donation Camp Created Successfully");
-    res.redirect("/");
-});
+
+router.route("/")
+        .get(isLoggedIn,isVerified,campController.renderCreateCampForm)
+        .post(isLoggedIn,isVerified,wrapAsync(campController.createCamp));
 
 
 

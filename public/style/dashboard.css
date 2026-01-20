@@ -1,6 +1,23 @@
 .blur{
     opacity:0.7;
 }
+
 .dashboard-container{
     padding:1rem;
+}/* Active tab color matches your theme */
+.nav-tabs .nav-link.active {
+    background-color: #bf1818 !important;
+    color: white !important;
+    border-color: #bf1818 !important;
+    font-weight: 600;
+}
+
+.nav-tabs .nav-link {
+    color: #333;
+    transition: 0.3s;
+}
+
+.tab-content {
+    border-radius: 0 0 15px 15px;
+    min-height: 400px;
 }

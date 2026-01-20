@@ -4,6 +4,10 @@
 
  const campSchema = new Schema(
   {
+    title:{
+        type:String,
+        required:true
+    },
     country:{
         type:String,
         required:true

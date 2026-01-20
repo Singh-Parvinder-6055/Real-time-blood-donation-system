@@ -19,12 +19,29 @@
                 
                 </p>
             </div>
-             <div class="show-btns">
-                <a href="/verify/<%=verification._id%>" class="btn  btn-success col-sm-4 col-md-2 verify-btn ">Verify</a>
-                
-                <a href="/reject/<%=verification._id%>" class="btn btn-danger col-sm-4 col-md-2 reject-btn offset-2">Reject</a>
-                
+    <div class="show-btns mt-4">
+        <div class="col-md-3 p-0">
+            <form action="/verify/<%=verification._id%>?_method=PATCH">
+                <button type="submit" class="btn btn-success w-100">Verify</button>
+            </form>
         </div>
+        <div class="col-md-3 offset-1 p-0">
+            <button type="button" class="btn btn-danger w-100" id="toggleReject">Reject</button>
+        </div>        
+    </div>
+
+<div id="rejectionSection" style="display: none;" class="mt-4 border p-3 rounded bg-light">
+    <form action="/reject/<%=verification._id%>?_method=PATCH" method="POST" id="rejectForm">
+        <div class="mb-3">
+            <label for="rejectionReason" class="form-label"><b>Reason for Rejection:</b></label>
+            <textarea name="rejectionReason" id="rejectionReason" class="form-control" rows="3" placeholder="Explain why the document was rejected..."></textarea>
+            <div id="error-msg" class="text-danger small mt-1" style="display: none;">Please provide a reason before submitting.</div>
+        </div>
+        <button type="submit" class="btn btn-danger">Submit Rejection</button>
+        <button type="button" class="btn btn-dark " id="cancelReject">Cancel</button>
+    </form>
+</div>
+
 
         </div>
 

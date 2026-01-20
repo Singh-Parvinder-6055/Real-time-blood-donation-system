@@ -14,6 +14,7 @@ const User=require("./models/user");
 const ejsMate=require("ejs-Mate");
 const flash=require("connect-flash");
 const ExpressError=require("./utils/ExpressError");
+const methodOverride=require("method-override");
 
 
 app.set("view engine","ejs");
@@ -23,6 +24,8 @@ app.use(express.json());
 //app.use(methodOverride('_method'));//to use delete,put & patch methods using forms
 app.use(express.static(path.join(__dirname,"public")));
 app.engine("ejs",ejsMate);
+app.use(methodOverride('_method'));//to use delete,put & patch methods using forms
+
 
 const sessionOptions={
     secret:"mySecret", //very weak secret
@@ -74,9 +77,9 @@ res.render("common/index.ejs");
 });
 
 app.use("/",userRouter);
-app.use("/",emergencyRouter);
-app.use("/",campRouter);
-app.use("/",verificationRouter);
+app.use("/emergency",emergencyRouter);
+app.use("/camp",campRouter);
+app.use("/getVerified",verificationRouter);
 app.use("/",adminRouter);
 
 
