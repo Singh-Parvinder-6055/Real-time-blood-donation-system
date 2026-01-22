@@ -68,7 +68,8 @@
                         <th class="text-center">Blood Group</th>
                         <th class="text-center">Units</th>
                         <th class="text-center">Hospital</th>
-                        <th class="text-center">Status</th>
+                        <th class="text-center">Status</th>                    
+                        <th class="text-center">Action</th>
                         <!-- <th class="text-center">Actions</th> -->
                     </tr>
                 </thead>
@@ -86,6 +87,10 @@
                                 <span class="badge bg-warning">Open</span>
                             <% } %>
                         </td>
+                        <td class="text-center delete-emrgency">
+                          <form method="POST" action="/emergency/destroy/<%=req._id%>?_method=DELETE">
+                            <button type="submit">Delete</button>
+                          </form></td>
                         
                     </tr>
                     <% } %>

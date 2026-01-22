@@ -1,0 +1,29 @@
+<% layout("layouts/boilerplate")%>
+   <div class="row">
+    <h1>Edit donation camp info</h1>
+    <div class="col-6 offset-3">
+        
+        <form method="post" action="/camp/edit/<%=camp._id%>" class="needs-validation" novalidate>
+            <div class="row">
+                <div class="mb-3">
+                    <label for="tile" class="form-label"><b>Camp Tile:</b> </label>
+                    <input type="text"  class="form-control"id="title" name="camp[title]" value="<%=camp.title%>" placeholder="ex. Summer Drive" required>
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label" for="startDateTime"><b>Start Date & Time</b></label>
+                <input type="datetime-local" class="form-control" id="startDateTime" value="<%=camp.startDateTime%>" name="camp[startDateTime]" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="endDateTime"><b>End Date & Time</b></label>
+                <input type="datetime-local" class="form-control" id="endDateTime" value="<%=camp.endDateTime%>" name="camp[endDateTime]" required>
+            </div>                    
+            
+            <button class="btn btn-success">Submit</button>
+        </form>
+
+    </div>
+</div>
+
+</body>
