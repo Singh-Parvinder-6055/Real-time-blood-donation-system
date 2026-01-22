@@ -1,45 +1,48 @@
-<% layout("layouts/boilerplate")%>
 <% layout("layouts/boilerplate") %>
-   <div class="row">
-    <h1>Oragnize a Camp</h1>
-    <div class="col-6 offset-3">
-        
-        <form method="post" action="/camp" class="needs-validation" novalidate>
-            <div class="row">
-                <div class="mb-3">
-                    <label for="tile" class="form-label"><b>Camp Tile:</b> </label>
-                    <input type="text"  class="form-control"id="title" name="camp[title]" placeholder="ex. Summer Drive" required>
-                </div>
-                <div class="mb-3 col-md-4">
-                    <label for="country" class="form-label"><b>Country:</b> </label>
-                    <input type="text"  class="form-control"id="country" name="camp[country]" placeholder="ex. India" required>
-        
-                </div>
-                <div class="mb-3 col-md-4">
-                    <label for="city" class="form-label"><b>City:</b> </label>
-                    <input type="text" class="form-control" id="city" name="camp[city]" placeholder="ex. Delhi" required>
-                 
-                </div>
-                <div class="mb-3 col-md-4">
-                    <label for="pincode" class="form-label"><b>Pincode:</b> </label>
-                    <input type="text" class="form-control" id="pincode" name="camp[pincode]" placeholder="Enter your City's pincode" required>
-                 
-                </div>
-            </div>
-            
-            <div class="mb-3">
-                <label class="form-label" for="startDateTime"><b>Start Date & Time</b></label>
-                <input type="datetime-local" class="form-control" id="startDateTime" name="camp[startDateTime]" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="endDateTime"><b>End Date & Time</b></label>
-                <input type="datetime-local" class="form-control" id="endDateTime" name="camp[endDateTime]" required>
-            </div>                    
-            
-            <button class="btn btn-success">Submit</button>
-        </form>
 
+<div class="row justify-content-center mt-5">
+  <div class="col-md-7 col-lg-6">
+
+    <div class="camp-card">
+      <h2 class="text-center mb-4">Organize a Camp</h2>
+
+      <form method="POST" action="/camp" class="needs-validation" novalidate>
+
+        <div class="mb-3">
+          <label for="title" class="form-label">Camp Title</label>
+          <input type="text" class="form-control" id="title" name="camp[title]" placeholder="e.g. Summer Drive" required>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-4">
+            <label for="country" class="form-label">Country</label>
+            <input type="text" class="form-control" id="country" name="camp[country]" required>
+          </div>
+
+          <div class="mb-3 col-md-4">
+            <label for="city" class="form-label">City</label>
+            <input type="text" class="form-control" id="city" name="camp[city]" required>
+          </div>
+
+          <div class="mb-3 col-md-4">
+            <label for="pincode" class="form-label">Pincode</label>
+            <input type="text" class="form-control" id="pincode" name="camp[pincode]" required>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="startDateTime" class="form-label">Start Date & Time</label>
+          <input type="datetime-local" class="form-control" id="startDateTime" name="camp[startDateTime]" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="endDateTime" class="form-label">End Date & Time</label>
+          <input type="datetime-local" class="form-control" id="endDateTime" name="camp[endDateTime]" required>
+        </div>
+
+        <button class="btn camp-btn w-100 mt-3">Create Camp</button>
+      </form>
     </div>
-</div>
 
-</body>
+  </div>
+</div>

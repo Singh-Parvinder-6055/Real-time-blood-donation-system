@@ -1,24 +1,42 @@
 <% layout("layouts/boilerplate") %>
-<body> 
-    <h3>All Verification Requests</h3>
-    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
-      <%if(!verifications.length){%>
-        <p class="mb-2 mt-2"><i>You have got no work today, Enjoy your day!&#x1F600;</i><p>
-      <%}%>
-     <%for(verification of verifications) {%>
-       
-        <div class="card verification-cards col" style="width: 18rem;">
-              <!-- <div class="card-img-overlay"></div> hover effect happening here -->
-                <div class="card-body">
-                    <h3 class="card-title"><b><%=verification.organization.name%></b></h3>
-                    <p class="card-text"><i>Created On:</i></p>
-                    <p class="card-text"> <%=verification.createdAt.toString().split(" ").slice(0,4).join(" ")%></p><br>
-                    <a href="/verification/<%=verification._id%>" class="reviewVerification verification-link">Review</a>
-                </div>
-                
+
+<div class="container mt-5">
+  <h3 class="text-center mb-4 admin-title">All Verification Requests</h3>
+
+  <% if (!verifications.length) { %>
+    <p class="text-center empty-state">
+      <i>You're all caught up! 🎉  
+No verification requests pending right now.
+</i>
+    </p>
+  <% } %>
+
+  <div class="row g-4">
+    <% for (verification of verifications) { %>
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="card verification-card h-100">
+          <div class="card-body">
+            <h4 class="card-title">
+              <%= verification.organization.name %>
+            </h4>
+
+            <p class="card-text text-muted small mb-1">
+              Created On
+            </p>
+            <p class="card-text date-text">
+              <%= verification.createdAt.toString().split(" ").slice(0,4).join(" ") %>
+            </p>
+
+            <a href="/verification/<%= verification._id %>"
+               class="btn review-btn mt-3">
+               Review Request
+            </a>
+          </div>
         </div>
-               
-    <%}%>
-    </div>
+      </div>
+    <% } %>
+  </div>
+</div>
+
 <!-- verification-card col  verification-link-->
     

@@ -75,6 +75,8 @@ app.get("/", async (req,res)=>{
 res.render("common/index.ejs",{totalActiveEmergencies});
 });
 
+
+
 app.use("/",userRouter);
 app.use("/emergency",emergencyRouter);
 app.use("/camp",campRouter);
