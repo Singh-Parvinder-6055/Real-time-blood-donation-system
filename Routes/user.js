@@ -40,14 +40,11 @@ router.get("/activeEmergencies/:id",async(req,res)=>{
         res.render("common/activeEmergencies.ejs",{activeEmergencies});
 });
 
-router.get("/upcomingCamps/:id",async(req,res)=>{
-        let {id}=req.params;
-        let user= await User.findById(id);
-        if(!user){
-                req.flash("error","you are not logged in");
-                return res.redirect("/");
-        }
-        let upcomingCamps= await Camp.find({status:"upcoming",pincode:user.pincode}).populate({path:"organizer"});
+router.get("/upcomingCamps/:id",isLoggedIn,async(req,res)=>{
+        
+        
+        let upcomingCamps = await Camp.find({status: { $in: ["upcoming", "ongoing"] },pincode: req.user.pincode}).populate("organizer");
+
         if(!upcomingCamps.length){
                 req.flash("success","No upcoming Blood Donation Camps found in your city");
                 return res.redirect("/");
@@ -56,13 +53,13 @@ router.get("/upcomingCamps/:id",async(req,res)=>{
         res.render("common/upcomingCamps.ejs",{upcomingCamps});
 });
 
-router.get("/activeEmergencies",async(req,res)=>{
+router.get("/activeEmergencies",isLoggedIn,async(req,res)=>{
         let {pincode}=req.query;
         if(!pincode){
                 req.flash("error","Please enter a pincode");
                 return res.redirect("/");
         }
-        let activeEmergencies= await Emergency.find({pincode:pincode}).populate({path:"requestedBy"});
+        let activeEmergencies= await Emergency.find({status:"open",pincode:pincode}).populate({path:"requestedBy"});
         if(!activeEmergencies.length){
                 req.flash("success","No active Emergency blood requirement found in your city");
                 return res.redirect("/");

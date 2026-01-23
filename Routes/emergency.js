@@ -19,11 +19,11 @@ router.delete("/emergency/destroy/:id",async(req,res)=>{
         let emergency=await Emergency.findById(id);
         if(!emergency){
                 req.flash("error","No emergency request found");
-                return res.redirect(`/dashboard/${req.user._id}`);
+                return res.redirect(`/dashboard/${req.user._id}?role=${req.user.role}`);
         }
         if(emergency.status==="fulfilled"){
                 req.flash("error","This emergency request is fulfilled, and cannot be deleted.");
-               return res.redirect(`/dashboard/${req.user._id}`);
+               return res.redirect(`/dashboard/${req.user._id}?role=${req.user.role}`);
         }
         let patientId=emergency.patient;
         await User.findByIdAndUpdate(patientId,{$pull:{emergencies:emergency._id}});     

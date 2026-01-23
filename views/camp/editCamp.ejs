@@ -3,7 +3,7 @@
     <h1>Edit donation camp info</h1>
     <div class="col-6 offset-3">
         
-        <form method="post" action="/camp/edit/<%=camp._id%>" class="needs-validation" novalidate>
+        <form method="post" action="/camp/edit/<%=camp._id%>?_method=PATCH" class="needs-validation" novalidate>
             <div class="row">
                 <div class="mb-3">
                     <label for="tile" class="form-label"><b>Camp Tile:</b> </label>

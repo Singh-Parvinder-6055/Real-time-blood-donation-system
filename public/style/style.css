@@ -87,7 +87,7 @@
 }
 
 /* MOBILE FIXES */
-@media (max-width: 768px) {
+@media (max-width: 800px) {
   .custom-navbar {
     padding: 8px 16px;
   }
@@ -570,7 +570,7 @@
   padding:0.7rem; */
 }
 
-.reviewVerification{
+.small-Blue-btn{
   color:white;
   background-color:#0d6efd;  
   text-decoration:none;

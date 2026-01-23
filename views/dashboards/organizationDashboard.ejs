@@ -42,6 +42,8 @@
                     <th>Camp Name</th>
                     <th>Date</th>
                     <th>Location</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
             <tbody>
@@ -50,7 +52,17 @@
                     <td><%= camp.title %></td>
                     <td><%= camp.startDateTime.toDateString() %></td>
                     <td><%= camp.city %></td>
+                    <td class="text-center small-Blue-btn">
+                        <a class="small-Blue-btn" href="/camp/edit/<%=camp._id%>">Edit</a>    
+                    </td>  
+                    <td class="text-center small-blue-bttn">
+                        <form method="post" action="/camp/<%=camp._id%>?_method=DELETE">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>                                          
                 </tr>
+                
+                
                 <% } %>
             </tbody>
             </table>

@@ -28,7 +28,10 @@
             </i> Emergency Requirements</a>
           </button>  
         <%}%>
-        <a class="nav-link">How it works? </a>
+        <%if(!currUser || currUser.role!="admin"){%>
+            <a class="nav-link">How it works? </a>
+        <%}%>
+        
         <%if(currUser && currUser.role=="admin"){%>
           <a class="nav-link" href="/verify">Verify Organizations</a>
         <%}%>
