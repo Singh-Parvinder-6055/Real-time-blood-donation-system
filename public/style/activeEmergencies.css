@@ -1,6 +1,80 @@
-.emergency-card{    
-    /* border:none !important; */
-    margin:2rem 2rem;
-    padding:1em;
+/* FULL PAGE BACKGROUND */
+body {
+  margin: 0;
+}
 
+.emergency-page {
+  min-height: 100vh;
+  
+  padding: 1.5rem 0;
+}
+
+/* TITLE */
+.page-title {
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+/* CARD */
+.emergency-card {
+  border-radius: 14px;
+  border-left: 5px solid #dc3545;
+  background-color:  white ;
+  transition: 0.2s ease;
+}
+
+.emergency-card:hover {
+  transform: translateY(-4px);
+  background-color: #e1dbd5;
+}
+
+/* REDUCED PADDING */
+.emergency-card .card-body {
+  padding: 0.75rem;
+}
+
+/* TEXT SPACING */
+.emergency-card p {
+  margin-bottom: 0.4rem;
+}
+
+.blood-group {
+  margin: 0.5rem 0;
+  color: #b71c1c;
+}
+
+.blood-group span {
+  font-weight: 700;
+}
+
+/* BADGE */
+.urgency-badge {
+  background: #dc3545;
+  font-size: 0.7rem;
+  padding: 4px 10px;
+  margin-bottom: 0.4rem;
+  display: inline-block;
+}
+
+/* STATUS */
+.status {
+  color: #ff9800;
+  font-weight: 600;
+}
+
+/* BUTTON */
+.fulfill-btn {
+  margin-top: 0.6rem;
+  width: 100%;
+  border: 1px solid #198754;
+  background: transparent;
+  color: #198754;
+  padding: 0.3rem;
+  border-radius: 6px;
+}
+
+.fulfill-btn:hover {
+  background: #198754;
+  color: #fff;
 }

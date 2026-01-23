@@ -1,16 +1,56 @@
-<body> 
-    <h3>All Active Emergencies</h3>
-    <div >
-     <%for(emergency of activeEmergencies) {%>
-       
-                <div >
-                    <p ><b><%=emergency.urgencyLevel%></b></p>
-                    <p ><%=emergency.city%></p>
-                    <p ><%=emergency.status%></p>                
-                </div>
-                
+<% layout("layouts/boilerplate") %>
+
+<div class="emergency-page">
+  <div class="container">
+    <h3 class="page-title">All Active Emergencies</h3>
+
+    <% if (!activeEmergencies.length) { %>
+      <div class="alert alert-success text-center">
+        🎉 No active emergencies at the moment.
+      </div>
+    <% } %>
+
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-3">
+      <% for (let emergency of activeEmergencies) { %>
+        <div class="col">
+          <div class="card emergency-card shadow-sm">
+            <div class="card-body">
+
+              <span class="badge urgency-badge">
+                <%= emergency.urgencyLevel.toUpperCase() %>
+              </span>
+
+              <h5 class="blood-group">
+                Blood group: <span><%= emergency.group %></span>
+              </h5>
+
+              <p><strong>Hospital Name:</strong> <%= emergency.hospital %></p>
+              <p><strong>City:</strong> <%= emergency.city %></p>
+              <p><strong>Contact no:</strong> <%= emergency.contact %></p>
+              <p><strong>Units required:</strong> <%= emergency.units %></p>
+
+              <p>
+                <strong>Status:</strong>
+                <span class="status"><%= emergency.status %></span>
+              </p>
+
+              <small class="text-muted">
+                Created on: <%= emergency.createdAt?.toDateString() || "Recently" %>
+              </small>
+
+              <% if (currUser.role === "admin" && !emergency.isFulfilled) { %>
+                <form method="POST" action="/emergency/<%= emergency._id %>/fulfill">
+                  <button class="btn fulfill-btn">
+                    ✅ Mark as Fulfilled
+                  </button>
+                </form>
+              <% } %>
+
+            </div>
+          </div>
         </div>
-       </a>        
-    <%}%>
+      <% } %>
     </div>
-</body>
+  </div>
+</div>
+

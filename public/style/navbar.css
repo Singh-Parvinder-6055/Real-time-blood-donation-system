@@ -1,39 +1,113 @@
-#emergencyTruck{
-    color:white !important;
-}
 
-/* admiin dashboard */
+/* =========================
+   ADMIN DASHBOARD STYLING
+   ========================= */
+
 .dashboard-container {
-  background-color: #fff;
+  min-height: 100vh;
+  padding: 2rem;
+  
 }
 
-.nav-tabs .nav-link {
-  font-weight: 500;
+/* Heading */
+.dashboard-container h2 {
+  font-weight: 700;
+  color: #b71c1c;
+}
+
+.dashboard-container .blur {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Welcome text */
+.dashboard-container h5 {
+  font-weight: 600;
+  color: #333;
+}
+
+/* NAV TABS */
+#adminTab {
+  border-bottom: none;
+}
+
+#adminTab .nav-link {
   color: #555;
+  font-weight: 500;
+  border-radius: 8px 8px 0 0;
+  margin-right: 6px;
 }
 
-.nav-tabs .nav-link.active {
-  background-color: #dc3545;
+#adminTab .nav-link.active {
+  background-color: #b71c1c;
   color: #fff;
+  border: none;
 }
 
-.table th {
-  white-space: nowrap;
+/* TAB CONTENT BOX */
+#adminTabContent {
+  border-radius: 0 0 12px 12px;
 }
 
-.empty-state {
-  text-align: center;
-  padding: 3rem 1rem;
-  color: #777;
+/* SECTION HEADINGS */
+.tab-pane h4 {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #333;
 }
 
-.empty-state i {
-  font-size: 2.5rem;
-  color: #dc3545;
-  margin-bottom: 0.5rem;
+/* TABLE STYLING */
+.table {
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-.badge {
+.table thead th {
   font-size: 0.85rem;
-  padding: 0.45em 0.6em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* BADGES */
+.badge {
+  font-size: 0.75rem;
+  padding: 6px 10px;
+  border-radius: 20px;
+}
+
+/* DELETE BUTTON (Emergency tab) */
+.delete-emrgency button {
+  background-color: #dc3545;
+  border: none;
+  color: #fff;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.delete-emrgency button:hover {
+  background-color: #b02a37;
+}
+
+/* ALERTS */
+.alert {
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+/* REVIEW LINKS */
+.reviewVerification {
+  text-decoration: none;
+  font-weight: 500;
+  color: #b71c1c;
+}
+
+.reviewVerification:hover {
+  text-decoration: underline;
 }
