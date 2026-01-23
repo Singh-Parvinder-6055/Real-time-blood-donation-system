@@ -53,7 +53,7 @@ router.get("/upcomingCamps/:id",isLoggedIn,async(req,res)=>{
         res.render("common/upcomingCamps.ejs",{upcomingCamps});
 });
 
-router.get("/activeEmergencies",isLoggedIn,async(req,res)=>{
+router.get("/activeEmergencies",async(req,res)=>{
         let {pincode}=req.query;
         if(!pincode){
                 req.flash("error","Please enter a pincode");

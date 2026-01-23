@@ -1,34 +1,54 @@
-<% layout("layouts/boilerplate") %>
-
-<section class="hero">
-  <div class="hero-content">
-
-    <div class="badge">
-      ● <%=totalActiveEmergencies%> urgent requests active now
-    </div>
-
-    <h1 class="hero-title">
-      Every Drop <br />
-      Saves Lives
-    </h1>
-
-    <p class="hero-subtitle">
-      Real-time platform connecting blood donors, patients,
-      and hospitals during emergencies. Find donors instantly,
-      save lives together.
-    </p>
-
-    <div class="hero-buttons">
-      <button class="btn-primary">
-        <i class="fa-regular fa-heart"></i> I Want to Donate
-      </button>
-
-      <button class="btn-outline">
-        <i class="fa-solid fa-magnifying-glass"></i> Find Donors Now
-      </button>
-    </div>
-
-  </div>
-</section>
-
+<% layout("layouts/boilerplate") %>    
     
+
+
+<body class="bg-white">
+    <!-- Main Hero Section Only -->
+    <main class="container py-5 py-md-6">
+        <div class="row align-items-center g-5">
+            <!-- Left Column - Text Content -->
+            <div class="col-12 col-md-6">
+                <h1 class="display-4 fw-bold mb-4 lh-1">
+                    Every Drop <span class="text-danger">Saves Lives</span>
+                </h1>
+                <p class="fs-5 text-muted mb-4">
+                    "BloodConnect is a real-time emergency blood donor matching platform."
+                </p>
+                
+                <div class="d-grid d-sm-flex gap-3 mb-5">
+                    <button class="btn btn-danger btn-lg px-4 py-2">
+                        Find Donors Now
+                    </button>
+                    <button class="btn btn-outline-danger btn-lg px-4 py-2">
+                        I Want to Donate
+                    </button>
+                </div>
+
+                <div class="row text-center g-4">
+                    <div class="col-4">
+                        <div class="fs-2 fw-bold">10,000+</div>
+                        <div class="text-muted small">Active Donors</div>
+                    </div>
+                    <div class="col-4">
+                        <div class="fs-2 fw-bold">500+</div>
+                        <div class="text-muted small">Partner Hospitals</div>
+                    </div>
+                    <div class="col-4">
+                        <div class="fs-2 fw-bold">24/7</div>
+                        <div class="text-muted small">Emergency Response</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Illustration -->
+            <div class="col-12 col-md-6 d-flex justify-content-center">
+                <img 
+                    src="images/illustration.jpeg" 
+                    alt="BloodConnect App Illustration" 
+                    class="illustration-image img-fluid"
+                />
+            </div>
+        </div>
+    </main>
+   
+</body>
