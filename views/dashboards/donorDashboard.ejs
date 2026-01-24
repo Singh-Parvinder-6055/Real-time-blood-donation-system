@@ -1,5 +1,12 @@
-<%layout ("layouts/boilerplate")%>
+<% layout("layouts/boilerplate") %>
+
 <div class="dashboard-container">
-    <h4>Hey <%=currUser.username%>  &#x1F44B;</h4>
-    <p class="blur"><i>Track your activity in this dashboard</i></p>
+  <h4>Hey <%= currUser.username %> </h4>
+  <p class="blur"><i>Track your activity in this dashboard</i></p>
 </div>
+
+<h3>Emergency Requests</h3>
+
+<ul id="requests" class="request-list"></ul>
+
+<script src="/js/donor.js"></script>

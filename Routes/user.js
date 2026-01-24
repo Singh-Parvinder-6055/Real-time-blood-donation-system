@@ -1,9 +1,16 @@
+if(process.env.NODE_ENV !="production"){
+    require('dotenv').config();
+
+}
+
 const express=require("express");
 const router=express.Router();
 const { userSchema } = require("../Schema.js");
 const User=require("../models/user.js");
 const passport=require("passport");
 const {isLoggedIn,isAdmin, saveRedirectUrl}=require("../middlewares.js");
+const jwt = require("jsonwebtoken");
+
 
 
 router.get("/signup",(req,res)=>{
@@ -27,7 +34,7 @@ router.get("/signup",(req,res)=>{
     
 });
 
-router.post("/signup",async(req,res)=>{
+router.post("/signup",async(req,res,next)=>{
     try{
         
         let { error } = userSchema.validate(req.body.user);
@@ -60,7 +67,26 @@ router.get("/login",(req,res)=>{
 router.post("/login",saveRedirectUrl,passport.authenticate('local',  //the passport.authenticate() internally calls req.login(user)  and passes the user after accessing the user from req.user
                     {failureRedirect:'/login', 
                     failureFlash:true}),(req,res)=>{
-                        req.flash("success","Welcome Back!");
+                        
+                         const user = req.user;
+                         
+                        //  adding jwt token for authentication of user
+                        const token = jwt.sign({
+
+                            id: user._id,
+                            role: user.role
+                            },
+                            process.env.JWT_SECRET,
+                           { expiresIn: "1d" }
+                        );
+                        // console.log(token);
+
+                        // store jwt token in cookie ,temporary
+                        res.cookie("token", token, {
+                           httpOnly: false,
+                           sameSite: "lax"
+                        });
+                        req.flash("success", "Welcome Back!");
                         let redirectUrl=res.locals.redirectUrl ||"/"; //now after the login, the users will either be redirected to the original path they tried to access or to the home page
                         res.redirect(redirectUrl);
                     }
@@ -71,6 +97,7 @@ router.get("/logout",async(req,res)=>{
         if(err){    
             next(err);
         }
+        res.clearCookie("token");  //after logout it clears the token cookie , prevent reuse of token
         req.flash("success","you are logged out");
         res.redirect("/");
     

@@ -15,6 +15,21 @@ const ejsMate=require("ejs-Mate");
 const flash=require("connect-flash");
 const ExpressError=require("./utils/ExpressError");
 
+require("dotenv").config();
+const http = require("http");
+//  create HTTP server
+const server = http.createServer(app);
+//  attach socket.io to server
+const { Server } = require("socket.io");
+const io = new Server(server);
+// require socket logic and pass io
+require("./socket")(io);
+
+const ioStore = require("./io.js");
+ioStore.init(io)
+
+
+
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
@@ -45,7 +60,7 @@ passport.deserializeUser(User.deserializeUser());//to delete user's info from th
 
 
 
-app.listen(8080,()=>{
+server.listen(8080,()=>{
     console.log("Listening on port 8080");
 });
 
