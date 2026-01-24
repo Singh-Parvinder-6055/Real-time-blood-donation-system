@@ -1,7 +1,11 @@
 module.exports.isVerified=(req,res,next)=>{
     if(!req.user.isVerified){
         req.flash("error","You are not verified")
+        if(!req.user.verification){
+            return res.redirect("/getVerified");
+        }
         return res.redirect("/");
+        
     }
     //console.log(req.user);
     next();
@@ -42,6 +46,33 @@ module.exports.saveRedirectUrl=(req,res,next)=>{
         res.locals.redirectUrl=req.session.redirectUrl; 
         //console.log(req.originalUrl);
         
+    }
+    next();
+};
+
+module.exports.isNotAdmin=(req,res,next)=>{
+    if(req.user.role==="admin"){
+        req.flash("error","Admins cannot donate, donate as a donor");
+        return res.redirect("/activeEmergencies");
+
+    }
+    next();
+};
+
+module.exports.isNotOrganization=(req,res,next)=>{
+    if(req.user.role==="organization"){
+        req.flash("error","Organizations cannot donate. If you want, donate as a donor");
+        return res.redirect("/activeEmergencies");
+
+    }
+    next();
+};
+
+module.exports.isNotPatient=(req,res,next)=>{
+    if(req.user.role==="patient"){
+        req.flash("error","Patients cannot donate. If you want, donate as a donor");
+        return res.redirect("/activeEmergencies");
+
     }
     next();
 };

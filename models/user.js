@@ -54,14 +54,28 @@ const userSchema = new Schema({
     enum: ["hospital", "blood-bank", "ngo"]
   },
   emergencies:[
-    {
+    {   
+      emergency:{
         type:Schema.Types.ObjectId,
-        ref:"Emergency"
+        ref:"Emergency",
+      },        
+        donated:{
+      type:Boolean,
+      default:false
+    }
     }
   ],
   camps:[{
-    type:Schema.Types.ObjectId,
-    ref:"Camp"
+    camp:{
+      type:Schema.Types.ObjectId,
+      ref:"Camp",
+    },
+    
+    donated:{
+      type:Boolean,
+      default:false
+    }
+    
   }],
 
 //----common data-----
@@ -90,7 +104,7 @@ const userSchema = new Schema({
 }
 
 },
-{timestaps:true}
+{timestamps:true}
 ); 
 
 

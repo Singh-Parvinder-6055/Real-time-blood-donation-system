@@ -25,30 +25,32 @@
             <table class="table table-hover align-middle">
                 <thead class="table-warning">
                     <tr>
-                        <th class="text-center">Patient/Case</th>
+                        <th class="text-center">Patient</th>
                         <th class="text-center">Blood Group</th>
                         <th class="text-center">Units</th>
-                        <th class="text-center">Hospital</th>
+                        <th class="text-center">Hospital/Organization</th>
                         <th class="text-center">Status</th>
                         <th class="text-center">Created On</th>
                     </tr>
                 </thead>
                 <tbody>
                     <% for(let req of user.emergencies) { %>
+                        <% if (req && req.emergency) { %>
                     <tr class="align-middle">
-                        <td class="text-center"><strong><%= req.patient.username %></strong></td>
-                        <td class="text-center"><span class="badge bg-danger"><%= req.bloodGroup %></span></td>
-                        <td class="text-center"><%= req.unitsRequired %> Units</td>
-                        <td class="text-center"><%= req.requestedBy.username %></td>
+                        <td class="text-center"><strong><%= req.emergency.patient.username %></strong></td>
+                        <td class="text-center"><span class="badge bg-danger"><%= req.emergency.bloodGroup %></span></td>
+                        <td class="text-center"><%= req.emergency.unitsRequired %> Units</td>
+                        <td class="text-center"><%= req.emergency.requestedBy.name %></td>
                         <td class="text-center">
-                            <% if(req.isFulfilled) { %>
+                            <% if(req.emergency.isFulfilled) { %>
                                 <span class="badge bg-success">Fulfilled</span>
                             <% } else { %>
                                 <span class="badge bg-warning">Open</span>
                             <% } %>
                         </td>
-                        <td class="text-center"><%=req.createdAt.toString().split(" ").slice(0,4).join(" ")%></td>
+                        <td class="text-center"><%=req.emergency.createdAt.toString().split(" ").slice(0,4).join(" ")%></td>
                     </tr>
+                    <% } %>
                     <% } %>
                 </tbody>
             </table>

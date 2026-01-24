@@ -31,11 +31,13 @@
             </thead>
             <tbody>
                 <% for(let camp of user.camps) { %>
+                    <% if (camp && camp.camp) { %>
                 <tr>
-                    <td><%= camp.title %></td>
-                    <td><%= camp.startDateTime.toDateString() %></td>
-                    <td><%= camp.city %></td>
+                    <td><%= camp.camp.title %></td>
+                    <td><%= camp.camp.startDateTime.toDateString() %></td>
+                    <td><%= camp.camp.city %></td>
                 </tr>
+                <% } %>
                 <% } %>
             </tbody>
                 </table>
@@ -50,7 +52,7 @@
         <div class="tab-pane fade" id="emergency" role="tabpanel">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4>Blood you donated in emergencies</h4>
-        <a href="/emergency/new" class="btn btn-sm btn-warning">Find Emergencies near you</a>
+        
     </div>
 
     <% if (user.emergencies.length) { %>
@@ -68,24 +70,26 @@
                 </thead>
                 <tbody>
                     <% for(let req of user.emergencies) { %>
+                        <% if (req && req.emergency) { %>
                     <tr class="align-middle">
-                        <td class="text-center"><strong><%= req.patient.username %></strong></td>
-                        <td class="text-center"><span class="badge bg-danger"><%= req.bloodGroup %></span></td>
-                        <td class="text-center"><%= req.unitsRequired %> Units</td>
-                        <td class="text-center"><%= req.requestedBy.username %></td>
+                        <td class="text-center"><strong><%= req.emergency.patient.username %></strong></td>
+                        <td class="text-center"><span class="badge bg-danger"><%= req.emergency.bloodGroup %></span></td>
+                        <td class="text-center"><%= req.emergency.unitsRequired %> Units</td>
+                        <td class="text-center"><%= req.emergency.requestedBy.username %></td>
                         <td class="text-center">
-                            <% if(req.isFulfilled) { %>
-                                <span class="badge bg-success">Fulfilled</span>
+                            <% if(req.donated) { %>
+                                <span class="badge bg-success">Donated</span>
                             <% } else { %>
-                                <span class="badge bg-warning">Open</span>
+                                <span class="badge bg-warning">Donation Pending</span>
                             <% } %>
                         </td>
                         <td class="text-center">
-                            <form action="/emergency/<%= req._id %>/fulfill?_method=PATCH" method="POST" style="display:inline;">
-                                <button class="btn btn-sm btn-outline-success">Done</button>
+                            <form action="/emergency/cancelFulfill/<%= req.emergency._id %>/?_method=PATCH" method="POST" style="display:inline;">
+                                <button class="btn btn-sm btn-outline-success">Cancel</button>
                             </form>
                         </td>
                     </tr>
+                    <% } %>
                     <% } %>
                 </tbody>
             </table>

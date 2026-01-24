@@ -14,6 +14,7 @@ Main().then(()=>{console.log("connected to database");}).catch(err=>{console.log
 async function createAdmin() {
   try {
     const admin = new User({
+      name:"admin",
       username: "admin",
       role: "admin",
       city: "System",

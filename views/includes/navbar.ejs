@@ -23,7 +23,7 @@
         <%}%>
         <%if(currUser && currUser.role=="patient"){%>
           <button class="ebutton">
-            <a class="nav-link " id="emergencyTruck" href="/dashboard/<%=currUser._id%>?role=<%=currUser.role%>">
+            <a class="nav-link " id="emergencyTruck" href="/dashboard?role=<%=currUser.role%>">
             <i class="fa-solid fa-truck-medical">
             </i> Emergency Requirements</a>
           </button>  
@@ -36,15 +36,15 @@
           <a class="nav-link" href="/verify">Verify Organizations</a>
         <%}%>
         <%if(!currUser){%>
-          <form class="d-flex needs-validation" method="get" action="/activeEmergencies" role="search" novalidate>
+          <form class="d-flex needs-validation" method="get" action="activeEmergenciesWithPincode" role="search" novalidate>
               <input class="form-control me-2" type="search" name="pincode" placeholder="Enter your city's pincode" aria-label="Search" required/>
               <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
         <%}%>
         
         <%if(currUser){%>
-            <a class=" nav-link" href="/activeEmergencies/<%=currUser._id%>">Active Emergenies </a>
-            <a class=" nav-link" href="/upcomingCamps/<%=currUser._id%>">Find Donation Camps </a>
+            <a class=" nav-link" href="/activeEmergencies">Active Emergenies </a>
+            <a class=" nav-link" href="/upcomingCamps">Find Donation Camps </a>
         <%}%>
         
       </div>
@@ -58,7 +58,7 @@
         <%if(currUser){%>
         
           <a class="nav-link" href="/logout">Log Out</a>
-          <a class="nav-link pe-0 me-0" href="/dashboard/<%=currUser._id%>?role=<%=currUser.role%>"><i class="fa-solid fa-user"></i></a>
+          <a class="nav-link pe-0 me-0" href="/dashboard?role=<%=currUser.role%>"><i class="fa-solid fa-user"></i></a>
           
         <%}%>
         

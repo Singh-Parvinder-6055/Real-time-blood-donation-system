@@ -76,7 +76,7 @@ res.render("common/index.ejs",{totalActiveEmergencies});
 });
 
 app.use("/",userRouter);
-app.use("/",emergencyRouter);
+app.use("/emergency",emergencyRouter);
 app.use("/camp",campRouter);
 app.use("/getVerified",verificationRouter);
 app.use("/",adminRouter);

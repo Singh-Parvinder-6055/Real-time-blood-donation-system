@@ -1,17 +1,48 @@
-<body> 
-    <h3>All Upcomming Blood-donation Camps</h3>
-    <div >
-     <%for(camp of upcomingCamps) {%>
-       
-                <div >
-                    <p ><b><%=camp.title%></b></p>
-                    <p ><%=camp.city%></p>
-                    <p ><%=camp.startDateTime.toString().split(" ").slice(0,4).join(" ")%></p> 
-                    <p ><%=camp.organizer.name%></p>               
-                </div>
-                
+<% layout("layouts/boilerplate") %>
+
+<div class="emergency-page">
+  <div class="container">
+    <h3 class="page-title">All Active Emergencies</h3>
+
+    <% if (!upcomingCamps.length) { %>
+      <div class="alert alert-success text-center">
+        🎉 No upcoming camps at the moment.
+      </div>
+    <% } %>
+
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-3">
+      <% for (let camp of upcomingCamps) { %>
+        <div class="col">
+          <div class="card emergency-card shadow-sm">
+            <div class="card-body">
+
+              <span class="badge camp-status">
+                <%= camp.status.toUpperCase() %>
+              </span>
+
+              <h5 class="camp-title">
+                <span><%=camp.title %></span>
+              </h5>
+
+              <p><strong>Place:</strong> <%= camp.organizer.name %></p>
+              <p><strong>City:</strong> <%= camp.city %></p>
+              <p><strong>Contact no:</strong> <%=camp.organizer.phone %></p>
+              <p><strong>Date:</strong> <%=camp.startDateTime?.toDateString() %></p>
+
+              <p><strong>Time:</strong>    <%=camp.startDateTime.toString().split(" ")[4]%>   (IST)</p>
+
+              <% if (currUser && camp.status!=="completed") { %>
+                <form method="POST" action="/camp/participate/<%= camp._id %>">
+                  <button class="btn fulfill-btn">
+                    ✅ Take Part
+                  </button>
+                </form>
+              <% } %>
+
+            </div>
+          </div>
         </div>
-       </a>        
-    <%}%>
+      <% } %>
     </div>
-</body>
+  </div>
+</div>

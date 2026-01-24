@@ -15,7 +15,10 @@ const emergencyRequirementSchema = new Schema({
     required: true,
     min: 1
   },
-
+  unitsCollected:{
+    type:Number,
+    default:0
+  },
   urgencyLevel: {
     type: String,
     enum: ["low", "medium", "high"],
@@ -47,10 +50,21 @@ const emergencyRequirementSchema = new Schema({
     enum: ["open", "fulfilled", "closed"],
     default: "open"
   },
-  fulfilledBy:{
-    type:Schema.Types.ObjectId,
-    ref:"User"
+  isFulfilled:{
+    type:Boolean,
+    default:false
   },
+  fulfilledBy:[{
+    donor:{
+      type:Schema.Types.ObjectId,
+    ref:"User",
+    },
+    
+    isCollected:{
+      type:Boolean,
+      default:false
+    }
+  }],
   
   emergencyReason: String,
   fulfilledOn:Date,

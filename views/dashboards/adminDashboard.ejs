@@ -29,28 +29,32 @@
             <table class="table">
                 <thead class="table-light">
                 <tr>
-                    <th>Camp Name</th>
-                    <th>Date</th>
-                    <th>Location</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th class="text-center">Camp Name</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Location</th>
+                    <th class="text-center">Donors Registered</th>
+                    <th class="text-center">Edit</th>
+                    <th class="text-center">Delete</th>
                 </tr>
                 </thead>
             <tbody>
                 <% for(let camp of user.camps) { %>
+                    <% if (camp && camp.camp) { %>
                 <tr>
-                    <td><%= camp.title %></td>
-                    <td><%= camp.startDateTime.toDateString() %></td>
-                    <td><%= camp.city %></td>
-                    <td class="text-center small-Blue-btn">
-                        <a class="small-Blue-btn" href="/camp/edit/<%=camp._id%>">Edit</a>    
+                    <td class="text-center"><%= camp.camp.title %></td>
+                    <td class="text-center"><%= camp.camp.startDateTime.toDateString() %></td>
+                    <td class="text-center"><%= camp.camp.city %></td>
+                    <td class="text-center"><%= camp.camp.registeredDonors.length %></td>
+                    <td class="small-Blue-btn text-center">
+                        <a class="small-Blue-btn text-center" href="/camp/edit/<%=camp.camp._id%>">Edit</a>    
                     </td> 
-                    <td class="text-center small-blue-bttn">
-                        <form method="post" action="/camp/<%=camp._id%>?_method=DELETE">
-                            <button type="submit">Delete</button>
+                    <td class="text-center">
+                        <form method="post" action="/camp/<%=camp.camp._id%>?_method=DELETE">
+                            <button class="small-Blue-btn" type="submit">Delete</button>
                         </form>
                     </td>   
                 </tr>
+                <% } %>
                 <% } %>
             </tbody>
             </table>
@@ -78,31 +82,59 @@
                         <th class="text-center">Blood Group</th>
                         <th class="text-center">Units</th>
                         <th class="text-center">Hospital</th>
-                        <th class="text-center">Status</th>                    
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Fulfilled By</th>
+                        
                         <th class="text-center">Action</th>
-                        <!-- <th class="text-center">Actions</th> -->
+                        
                     </tr>
                 </thead>
                 <tbody>
                     <% for(let req of user.emergencies) { %>
+                        <% if (req && req.emergency) { %>
                     <tr class="align-middle">
-                        <td class="text-center"><strong><%= req.patient.username %></strong></td>
+                        <td class="text-center"><strong><%= req.emergency.patient.username %></strong></td>
                         <td class="text-center"><span class="badge bg-danger"><%= req.bloodGroup %></span></td>
-                        <td class="text-center"><%= req.unitsRequired %> Units</td>
-                        <td class="text-center"><%= req.requestedBy.username %></td>
+                        <td class="text-center"><%= req.emergency.unitsRequired %> Units</td>
+                        <td class="text-center"><%= req.emergency.requestedBy.username %></td>
                         <td class="text-center">
-                            <% if(req.isFulfilled) { %>
+                            <% if(req.emergency.isFulfilled) { %>
                                 <span class="badge bg-success">Fulfilled</span>
                             <% } else { %>
                                 <span class="badge bg-warning">Open</span>
                             <% } %>
                         </td>
-                        <td class="text-center delete-emrgency">
-                          <form method="POST" action="/emergency/destroy/<%=req._id%>?_method=DELETE">
-                            <button type="submit">Delete</button>
-                          </form></td>
+                       
+                            <td class="text-center">
+                                 <%if(req.emergency.fulfilledBy.length){%> 
+                                    <table class="table align-center">
+                                        <tbody>
+                                    <%for(donor of req.emergency.fulfilledBy){%>
+                                        <tr class="align-center">
+                                            <td class="text-center"><%= donor.donor.username %></td>
+                                             <td class="text-center">
+                                                <form method="POST" action="/emergencyFulfilled/<%=donor.donor._id%>?_method=PATCH">
+                                                    <button class="blood-received"type="submit" title="mark as collected">Mark as collected</button>
+                                                </form>
+                                             </td>
+                                            
+                                        
+                                        </tr>
+                                        <br>
+                                            
+                                    <%}%>
+                                            </tbody>
+                                    </table>
+                                     <%}%>
+                                </td>
                         
+                        
+                        <td class="text-center change-emrgency">
+                          <form method="POST" action="/emergency/<%=req.emergency._id%>?_method=DELETE">
+                            <button class="small-Blue-btn"type="submit">Delete</button>
+                          </form></td>
                     </tr>
+                    <% } %>
                     <% } %>
                 </tbody>
             </table>
@@ -130,12 +162,14 @@
             </thead>
             <tbody>
                 <% for(let org of verifiedOrgs) { %>
+                    <% if (org && org.organization) { %>
                 <tr>
                     <td><%= org.organization.username %></td>
                     <td><%= org.organization.city %></td>
                     <td><%= org.organization.phone %></td>
                     <td class="text-center"> <a class="small-Blue-btn" href="/verification/<%=org._id%>">review</a></td>
                 </tr>
+                <% } %>
                 <% } %>
             </tbody>
             </table>
@@ -163,12 +197,14 @@
             </thead>
             <tbody>
                 <% for(let org of rejectedOrgs) { %>
+                    <% if (org && org.organization) { %>
                 <tr>
                     <td><%= org.organization.username %></td>
                     <td><%= org.organization.city %></td>
                     <td class="text-danger small"><%= org.rejectionReason %></td>
-                    <td class="text-center"> <a class="reviewVerification" href="/verification/<%=org._id%>">review</a></td>
+                    <td class="text-center"> <a class="small-Blue-btn" href="/verification/<%=org._id%>">review</a></td>
                 </tr>
+                <% } %>
                 <% } %>
             </tbody>
 

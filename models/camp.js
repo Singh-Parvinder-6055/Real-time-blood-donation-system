@@ -43,11 +43,16 @@
       default: "upcoming"
     },
 
-    registeredDonors: [
-      {
+    registeredDonors: [{
+      donor:{
         type: Schema.Types.ObjectId,
         ref: "User"
+      },
+      isCollected:{
+        type:Boolean,
+        default:String,
       }
+    }
     ]
   },
   { timestamps: true }
