@@ -118,6 +118,10 @@ module.exports.fulfillEmergency = async (req, res) => {
     let emergency = await Emergency.findById(id);
     let user = await User.findById(req.user._id);
 
+    if(req.user.role=="admin"||req.user.role=="organizatio"){
+                req.flash("error",`${req.user.role}s cannot fulfille emergency requirements`);
+                return res.redirect("/activeEmergencies");
+        }
     const patientGroup = emergency.bloodGroup;
     const donorGroup = user.bloodGroup;
 

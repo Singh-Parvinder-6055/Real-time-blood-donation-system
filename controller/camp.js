@@ -91,6 +91,10 @@ module.exports.participateInCamp=async(req,res)=>{
         await updateCampStatus();
         let camp= await Camp.findById(req.params.id);
         let user= await User.findById(req.user._id);
+        if(req.user.role=="admin"||req.user.role=="organizatio"){
+                req.flash("error",`${req.user.role}s cannot participate in Camps`);
+                return res.redirect("/upcomingCamps");
+        }
 
         // Check if a User exists who already has this emergency ID in their list
         // This checks: "Find the user AND make sure they have this specific emergency ID"
@@ -117,8 +121,8 @@ module.exports.participateInCamp=async(req,res)=>{
         await camp.save();
         await user.save();
 
-        req.flash("success","Successfully Registered for emergency donation");
-        res.redirect("/");
+        req.flash("success","Successfully participated in donation camp");
+        res.redirect("/upcomingCamps");
 };
 
 

@@ -39,7 +39,7 @@
                 Created on: <%= emergency.createdAt?.toDateString() || "Recently" %>
               </small>
 
-              <% if ( emergency.unitsRequired!=emergency.unitsCollected && currUser.role!="admin") { %>
+              <% if ( emergency.unitsRequired!=emergency.unitsCollected && (currUser.role!="admin"&&currUser.role!="organization")) { %>
                 <form method="POST" action="/emergency/fulfill/<%=emergency._id%>?_method=PATCH">
                   <button class="btn fulfill-btn">
                     ✅ Fulfill the Requirement
