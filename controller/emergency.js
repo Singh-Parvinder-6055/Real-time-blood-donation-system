@@ -2,7 +2,7 @@ const Emergency=require("../models/emergency.js");
 const User=require("../models/user.js");
 const {emergencySchema}=require("../Schema.js");
 const ExpressError=require("../utils/ExpressError.js");
-
+const bloodCompatibility=require("../utils/bloodCompatibility.js");
 
 
 module.exports.renderCreateEmergencyForm=(req,res)=>{
@@ -86,6 +86,18 @@ module.exports.fulfillEmergency=async(req,res)=>{
         let {id}=req.params;
         let emergency= await Emergency.findById(id);
         let user= await User.findById(req.user._id);
+
+        const patientGroup = emergency.bloodGroup; // e.g., "A+"
+        const donorGroup = user.bloodGroup;     // e.g., "O-"
+
+        // Check if the donor group is in the list of compatible donors for the patient
+        const isMatch = bloodCompatibility[donorGroup].includes(patientGroup);
+
+        if (!isMatch) {
+                req.flash("error", `Your blood group (${donorGroup}) is not compatible with the patient blood group (${patientGroup}).`);
+                return res.redirect(`/activeEmergencies`);
+        }
+
 
         // Check if a User exists who already has this emergency ID in their list
         // This checks: "Find the user AND make sure they have this specific emergency ID"

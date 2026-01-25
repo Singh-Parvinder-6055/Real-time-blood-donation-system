@@ -5,6 +5,7 @@ const Emergency=require("../models/emergency.js");
 const Camp=require("../models/camp.js");
 const User=require("../models/user.js");
 const updateCampStatus=require("../utils/updateCampstatus.js");
+const bloodCompatibility=require("../utils/bloodCompatibility.js");
 
 module.exports.renderSignUpForm=(req,res)=>{
     req.session.redirectUrl="/";
@@ -149,21 +150,33 @@ module.exports.visitDashboard=async(req,res)=>{
         }
 };
 
-module.exports.activeEmergencies=async(req,res)=>{
-        let user= await User.findById(req.user._id);
-        const joinedIds = user.emergencies.map(item => item.emergency);
-        let activeEmergencies = await Emergency.find({
-                                    pincode: req.user.pincode,
-                                    status: "open",
-                                    _id: { $nin: joinedIds } // Exclude the ones already joined
-                                }).populate({ path: "requestedBy" });
-        
-        if(!activeEmergencies.length){
-                req.flash("success","No active Emergency blood requirement found in your city");
-                return res.redirect("/");
-        }
-        res.render("common/activeEmergencies.ejs",{activeEmergencies});
+
+
+module.exports.activeEmergencies = async (req, res) => {
+    // 1. Fetch user to get their bloodGroup and already joined emergencies
+    let user = await User.findById(req.user._id);
+    const joinedIds = user.emergencies.map(item => item.emergency);
+    
+    // 2. Get the list of compatible recipient groups for this user
+    // e.g., if user is O+, compatibleRecipients = ["A+", "B+", "AB+", "O+"]
+    const compatibleRecipients = bloodCompatibility[user.bloodGroup] || [];
+
+    // 3. Update query to include blood group matching
+    let activeEmergencies = await Emergency.find({
+        pincode: req.user.pincode,
+        status: "open",
+        _id: { $nin: joinedIds },
+        bloodGroup: { $in: compatibleRecipients } // Only show what user can donate to
+    }).populate({ path: "requestedBy" });
+
+    if (!activeEmergencies.length) {
+        req.flash("success", "No compatible active Emergency blood requirements found in your city");
+        return res.redirect("/");
+    }
+    
+    res.render("common/activeEmergencies.ejs", { activeEmergencies });
 };
+
 
 module.exports.upcomingCamps=async(req,res)=>{
         await updateCampStatus();
