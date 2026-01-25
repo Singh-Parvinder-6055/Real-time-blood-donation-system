@@ -5,9 +5,9 @@
             <h2>Admin Dashboard</h2>
             
         </div>
-        <form class="col-12 col-md-6 col-lg-5 d-flex needs-validation" method="POST" action="/changePincode?_method=PATCH" role="search" novalidate>
-              <input class="form-control me-2" type="search" name="pincode" placeholder="Change Pincode to see emergencies at different locations" aria-label="Search" required/>
-              <button class="btn btn-outline-success" type="submit">Submit</button>
+        <form class="col-12 col-md-6 col-lg-5 d-flex needs-validation" method="get" action="activeEmergenciesWithPincode" role="search" novalidate>
+              <input class="form-control me-2" type="search" name="pincode" placeholder="Enter pincode to see emergencies at different locations" aria-label="Search" required/>
+              <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
     </div>
     
