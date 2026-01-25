@@ -26,7 +26,7 @@
 
               <p><strong>Hospital Name:</strong> <%= emergency.requestedBy.name %></p>
               <p><strong>City:</strong> <%= emergency.city %></p>
-              <p><strong>Contact no:</strong> <%= emergency.phone %></p>
+              <p><strong>Contact no:</strong> <%= emergency.requestedBy.phone %></p>
               <p><strong>Units required:</strong> <%= emergency.unitsRequired %></p>
               <p><strong>Units collected:</strong> <%= emergency.unitsCollected %> out of <%=emergency.unitsRequired%></p>
 
