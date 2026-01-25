@@ -1,7 +1,11 @@
+
+
 const Emergency=require("../models/emergency.js");
 const User=require("../models/user.js");
 const {emergencySchema}=require("../Schema.js");
 const ExpressError=require("../utils/ExpressError.js");
+const { getIO } = require("../io");
+
 
 
 
@@ -57,6 +61,17 @@ module.exports.createEmergency=async(req,res)=>{
         await patientExists.save();
         await currUser.save();
         req.flash("success","Emergency Blood requirement Created Successfully!");
+         getIO().to("donors").emit("blood_request", {
+            requestId: newEmergency._id,            
+            bloodGroup: newEmergency.bloodGroup,   
+            units: newEmergency.unitsRequired,      
+            hospital: {
+            id: currUser._id,
+            name: currUser.username,
+            city: currUser.city
+            },
+            time: new Date()
+            });
         res.redirect("/");
    
 };

@@ -1,7 +1,13 @@
+if(process.env.NODE_ENV !="production"){
+    require('dotenv').config();
+
+}
+
 const { userSchema } = require("../Schema.js");
 const User=require("../models/user.js");
 const Verification = require("../models/verification.js");
 const ExpressError=require("../utils/ExpressError.js");
+const jwt=require("jsonwebtoken");
 
 
 module.exports.renderSignUpForm=(req,res)=>{
@@ -61,6 +67,24 @@ module.exports.renderLoginForm=(req,res)=>{
 };
 
 module.exports.loginUser=(req,res)=>{
+                    const user = req.user;
+                         
+                        //  adding jwt token for authentication of user
+                        const token = jwt.sign({
+
+                            id: user._id,
+                            role: user.role
+                            },
+                            process.env.JWT_SECRET,
+                           { expiresIn: "1d" }
+                        );
+                        // console.log(token);
+
+                        // store jwt token in cookie ,temporary
+                        res.cookie("token", token, {
+                           httpOnly: false,
+                           sameSite: "lax"
+                        });
                     req.flash("success","Welcome Back!");
                     let redirectUrl=res.locals.redirectUrl ||"/"; //now after the login, the users will either be redirected to the original path they tried to access or to the home page
                     res.redirect(redirectUrl);
