@@ -31,10 +31,8 @@ router.get("/upcomingCamps",isLoggedIn,wrapAsync(userController.upcomingCamps));
 
 router.get("/activeEmergenciesWithPincode",wrapAsync(userController.activeEmergenciesWithPincode));
 
-router.patch("/changePincode",isLoggedIn,async(req,res)=>{
-        let {pincode}=req.body;
-        await User.findByIdAndUpdate(req.user._id,{pincode:pincode});
-        req.flash("success",`Pincode changed to ${pincode} successfully.`);
-        res.redirect(`/dashboard?role=${req.user.role}`);
+router.patch("/changePincode",isLoggedIn,wrapAsync(userController.changePincode));
+router.get("/howItWorks",(req,res)=>{
+        res.render("common/howItWorks.ejs");
 });
 module.exports=router;

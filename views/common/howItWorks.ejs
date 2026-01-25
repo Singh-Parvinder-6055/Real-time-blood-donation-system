@@ -1,0 +1,84 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 text-danger"><i class="fa-solid fa-droplet me-2"></i>How It Works</h1>
+        <p class="lead text-muted">Understanding Blood Group Compatibility</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <h4 class="card-title mb-4">The Matching Logic</h4>
+                    <p>Our system uses medical standards to ensure that when an emergency is created, only compatible donors are notified. Below is the chart we use to power our real-time matching engine.</p>
+                    
+                    <div class="table-responsive mt-4">
+                        <table class="table table-bordered table-hover text-center align-middle">
+                            <thead class="table-danger text-white">
+                                <tr>
+                                    <th>Donor Group</th>
+                                    <th>Can Donate To</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>A+</strong></td>
+                                    <td>A+, AB+</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>A-</strong></td>
+                                    <td>A+, A-, AB+, AB-</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>B+</strong></td>
+                                    <td>B+, AB+</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>B-</strong></td>
+                                    <td>B+, B-, AB+, AB-</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>AB+</strong></td>
+                                    <td>AB+ Only (Universal Recipient)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>AB-</strong></td>
+                                    <td>AB+, AB-</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>O+</strong></td>
+                                    <td>A+, B+, AB+, O+</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>O-</strong></td>
+                                    <td><strong>All Blood Types</strong> (Universal Donor)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="row mt-5 text-center">
+        <div class="col-md-4">
+            <i class="fa-solid fa-bell fa-3x text-warning mb-3"></i>
+            <h5>Smart Notifications</h5>
+            <p class="small text-muted">Donors only receive alerts if their blood type matches the patient's requirement in their city.</p>
+        </div>
+        <div class="col-md-4">
+            <i class="fa-solid fa-shield-heart fa-3x text-danger mb-3"></i>
+            <h5>Verified Requests</h5>
+            <p class="small text-muted">All emergencies are linked to registered patient profiles to maintain system integrity.</p>
+        </div>
+        <div class="col-md-4">
+            <i class="fa-solid fa-bolt fa-3x text-primary mb-3"></i>
+            <h5>Real-Time Action</h5>
+            <p class="small text-muted">Donors can sign up instantly and coordinate with organizations for immediate collection.</p>
+        </div>
+    </div>
+</div>

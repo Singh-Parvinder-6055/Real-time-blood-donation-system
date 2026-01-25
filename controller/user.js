@@ -206,3 +206,10 @@ module.exports.activeEmergenciesWithPincode=async(req,res)=>{
         }
         res.render("common/activeEmergencies.ejs",{activeEmergencies});
 };
+
+module.exports.changePincode=async(req,res)=>{
+        let {pincode}=req.body;
+        await User.findByIdAndUpdate(req.user._id,{pincode:pincode});
+        req.flash("success",`Pincode changed to ${pincode} successfully.`);
+        res.redirect(`/dashboard?role=${req.user.role}`);
+};

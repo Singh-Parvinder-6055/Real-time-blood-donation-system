@@ -28,14 +28,16 @@
             </i> Emergency Requirements</a>
           </button>  
         <%}%>
-    
+        <%if(!currUser || currUser.role!="admin"){%>
+            <a class="nav-link" href="/howItWorks">How it works? </a>
+        <%}%>
         
         <%if(currUser && currUser.role=="admin"){%>
           <a class="nav-link" href="/verify">Verify Organizations</a>
         <%}%>
         <%if(!currUser){%>
           <form class="d-flex needs-validation" method="get" action="activeEmergenciesWithPincode" role="search" novalidate>
-              <input class="form-control me-2" id="em" type="search" name="pincode" placeholder="Enter Pincode" aria-label="Search" required/>
+              <input class="form-control me-2" type="search" name="pincode" placeholder="Enter Pincode" aria-label="Search" required/>
               <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
         <%}%>
