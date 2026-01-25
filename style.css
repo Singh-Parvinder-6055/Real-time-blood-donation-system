@@ -1,0 +1,123 @@
+/* Use Bootstrap's built-in red (#dc3545) or customize */
+:root {
+  --bs-danger: #e63946; /* Optional: warmer red */
+}
+
+/* Background gradient */
+body {
+  background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+}
+
+/* Illustration styling */
+.illustration-image {
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s ease;
+  display: block;
+  margin: 0 auto;
+}
+
+.illustration-image:hover {
+  transform: scale(1.02);
+}
+
+/* Floating animation */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0px); }
+}
+
+.illustration-image {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .illustration-image {
+    max-width: 90%;
+  }
+  
+  .display-4 {
+    font-size: 2.5rem;
+    text-align: center !important;
+  }
+  
+  .text-center {
+    text-align: center !important;
+  }
+  
+  .justify-content-center {
+    justify-content: center !important;
+  }
+  
+  .col-12.col-md-6.text-center.text-md-start {
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .illustration-image {
+    max-width: 85%;
+  }
+  
+  .fs-2 {
+    font-size: 1.75rem;
+  }
+  
+  .btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .row.g-4 > * {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+}
+/* Red shades only */
+.bg-red-100 {
+  background-color: #fecaca !important;
+}
+
+/* Center everything on mobile */
+@media (max-width: 768px) {
+  .step-card {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+/* Icon Animation */
+.icon-animated {
+  transition: transform 0.3s ease, fill 0.3s ease;
+  will-change: transform;
+}
+
+.step-card:hover .icon-animated {
+  transform: scale(1.15);
+  fill: #b91c1c !important; /* Slightly darker red on hover */
+}
+
+/* Optional: Gentle pulse on load (subtle) */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-card {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.step-card:nth-child(1) { animation-delay: 0.1s; }
+.step-card:nth-child(2) { animation-delay: 0.2s; }
+.step-card:nth-child(3) { animation-delay: 0.3s; }
+.step-card:nth-child(4) { animation-delay: 0.4s; }
