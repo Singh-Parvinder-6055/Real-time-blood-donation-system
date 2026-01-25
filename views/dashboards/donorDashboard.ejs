@@ -1,8 +1,17 @@
 <%layout ("layouts/boilerplate")%>
-<div class="dashboard-container">
-    <h2>Donor Dashboard</h2>
+<div class="dashboard-container container-fluid mt-4">
+    <div class="row row-cols-xs-1 row-cols-sm-1 row-cols-md-2">
+        <div class="col-5">
+            <h2>Donor Dashboard</h2>
+            
+        </div>
+        <form class="col-12 col-md-6 col-lg-5 d-flex needs-validation" method="POST" action="/changePincode?_method=PATCH" role="search" novalidate>
+              <input class="form-control me-2" type="search" name="pincode" placeholder="Change Pincode to see emergencies at different locations" aria-label="Search" required/>
+              <button class="btn btn-outline-success" type="submit">Submit</button>
+          </form>
+    </div>
+    
     <p class="blur"><i>Track your activity in this dashboard</i></p>
-    <div class="container-fluid mt-4">
     <h5 class="mb-4">Hey <%=currUser.username%>  &#x1F44B;</h5>
 
     <ul class="nav nav-tabs shadow-sm" id="adminTab" role="tablist">
@@ -24,18 +33,47 @@
             <table class="table">
                 <thead class="table-light">
                 <tr>
-                    <th>Camp Name</th>
-                    <th>Date</th>
-                    <th>Location</th>
+                    <th class="text-center">Camp Name</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Location</th>
+                    <th class="text-center">Contact</th>
+                    <th class="text-center">Camp Status</th>
+                    <th class="text-center">Donation Status</th>
+                    <th class="text-center">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <% for(let camp of user.camps) { %>
                     <% if (camp && camp.camp) { %>
                 <tr>
-                    <td><%= camp.camp.title %></td>
-                    <td><%= camp.camp.startDateTime.toDateString() %></td>
-                    <td><%= camp.camp.city %></td>
+                    <td class="text-center"><%= camp.camp.title %></td>
+                    <td class="text-center"><%= camp.camp.startDateTime.toDateString() %></td>
+                    <td class="text-center"><%= camp.camp.city %></td>
+                    <td class="text-center"><%= camp.camp.organizer.phone %></td>
+                    <td class="text-center">
+                        <% if(camp.camp.status==="ongoing") { %>
+                                <span class="badge bg-success">Ongoing</span>
+                            <% } else if(camp.camp.status==="upcoming") { %>
+                                <span class="badge bg-warning">Upcoming</span>
+                        <% } else { %>
+                                <span class="badge bg-danger">Completed</span>
+                        <% } %>
+                    </td>
+                    <td class="text-center">
+                            <% if(camp.donated) { %>
+                                <span class="badge bg-success">Donated</span>
+                            <% } else { %>
+                                <span class="badge bg-warning">Donation Pending</span>
+                            <% } %>
+                    </td>
+                    <td class="text-center">
+                            <%if(!camp.donated){%>
+                                <form action="/camp/cancelParticipation/<%= camp.camp._id %>/?_method=PATCH" method="POST" style="display:inline;">
+                                    <button class="btn btn-sm btn-outline-success">Cancel registration</button>
+                                </form>
+                            <%}%>
+                            
+                    </td>
                 </tr>
                 <% } %>
                 <% } %>
@@ -84,9 +122,12 @@
                             <% } %>
                         </td>
                         <td class="text-center">
-                            <form action="/emergency/cancelFulfill/<%= req.emergency._id %>/?_method=PATCH" method="POST" style="display:inline;">
-                                <button class="btn btn-sm btn-outline-success">Cancel</button>
-                            </form>
+                            <%if(!req.donated){%>
+                                <form action="/emergency/cancelFulfill/<%= req.emergency._id %>/?_method=PATCH" method="POST" style="display:inline;">
+                                    <button class="btn btn-sm btn-outline-success">Cancel</button>
+                                </form>
+                            <%}%>
+                            
                         </td>
                     </tr>
                     <% } %>
@@ -105,7 +146,7 @@
     </div>
 </div>
     
-</div>
+
 
 
 

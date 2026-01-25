@@ -50,7 +50,7 @@
       },
       isCollected:{
         type:Boolean,
-        default:String,
+        default:false,
       }
     }
     ]

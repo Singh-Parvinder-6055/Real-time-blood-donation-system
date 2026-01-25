@@ -69,10 +69,13 @@ app.use((req,res,next)=>{
 
 //home route
 app.get("/", async (req,res)=>{
-    let activeEmergencies= await Emergency.find();
-    let totalActiveEmergencies=activeEmergencies.length;
+    let activeDonors= await User.find({role:"donor"});
+    let totalActiveDonors=activeDonors.length;
+
+    let partnerHospitals= await User.find({role:"organization",organizationType:"hospital"});
+    let totalPartnerHospitals=partnerHospitals.length;
     
-res.render("common/index.ejs",{totalActiveEmergencies});
+res.render("common/index.ejs",{totalActiveDonors,totalPartnerHospitals});
 });
 
 app.use("/",userRouter);

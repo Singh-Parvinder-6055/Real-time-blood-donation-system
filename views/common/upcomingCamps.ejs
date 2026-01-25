@@ -32,7 +32,7 @@
               <p><strong>Time:</strong>    <%=camp.startDateTime.toString().split(" ")[4]%>   (IST)</p>
 
               <% if (currUser && camp.status!=="completed") { %>
-                <form method="POST" action="/camp/participate/<%= camp._id %>">
+                <form method="POST" action="/camp/participate/<%= camp._id %>?_method=PATCH">
                   <button class="btn fulfill-btn">
                     ✅ Take Part
                   </button>

@@ -138,15 +138,12 @@ module.exports.cancelFulfillEmergency=async(req,res)=>{
                 return res.redirect(`/dashboard?role=${req.user.role}`);
         }
 
-        console.log(user);
+        // console.log(user);
         if(user.isCollected){
                 req.flash("error","You have already donated blood, therefore, cannot cancel it");
                 return res.redirect(`/dashboard?role=${req.user.role}`);
         }
-        // emergency.unitsCollected--;
-        // if(emergency.unitsRequired>emergency.unitsCollected){
-        //          emergency.status="open";
-        // }
+        
         const newStatus = (emergency.unitsCollected - 1 < emergency.unitsRequired) ? "open" : "fulfilled";
 
         await Emergency.findByIdAndUpdate(id, {
@@ -162,4 +159,25 @@ module.exports.cancelFulfillEmergency=async(req,res)=>{
         res.redirect(`/dashboard?role=${req.user.role}`);
         
         
+};
+
+
+module.exports.emergencyFulfilled=async(req,res)=>{
+        let{uId,eId}=req.params;        
+
+        const userResult=await User.updateOne({_id: uId,"emergencies.emergency": eId}, // This part "finds" the correct index
+                             {$set: { "emergencies.$.donated": true } // The '$' uses the index found above
+                        });
+        // If the ID was fake or the link doesn't exist, matchedCount will be 0
+        if (userResult.matchedCount === 0) {
+                req.flash("error", "Invalid User ID or Emergency Link");
+                return res.redirect(`/dashboard?role=${req.user.role}`);
+        }
+        await Emergency.updateOne({_id:eId,"fulfilledBy.donor":uId},
+                                  {$set:{"fulfilledBy.$.isCollected":true, //this $ refers to the above donor
+                                        "isFulfilled": true   // this refers to the whole request
+                                  }
+                                });
+        req.flash("success","Emergency fulfilled");
+        res.redirect(`/dashboard?role=${req.user.role}`);
 };

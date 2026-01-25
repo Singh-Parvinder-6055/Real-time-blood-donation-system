@@ -36,12 +36,13 @@
             <h4>Camps Organized by Me</h4>
             <%if(user.camps.length){%>
         <div class="table-responsive">
-            <table class="table">
+            <table class="table align-middle">
                 <thead class="table-light">
                 <tr>
                     <th class="text-center">Camp Name</th>
                     <th class="text-center">Date</th>
                     <th class="text-center">Location</th>
+                    <th class="text-center">Status</th>
                     <th class="text-center">Donors Registered</th>
                     <th class="text-center">Edit</th>
                     <th class="text-center">Delete</th>
@@ -50,21 +51,59 @@
             <tbody>
                 <% for(let camp of user.camps) { %>
                     <% if (camp && camp.camp) { %>
-                <tr class="align-middle">
+                <tr>
                     <td class="text-center"><%= camp.camp.title %></td>
                     <td class="text-center"><%= camp.camp.startDateTime.toDateString() %></td>
                     <td class="text-center"><%= camp.camp.city %></td>
-                    <td class="text-center"><%= camp.camp.registeredDonors.length %></td>
-                    <td class="text-center small-Blue-btn">
+                    <td class="text-center">
+                        <% if(camp.camp.status==="ongoing") { %>
+                                <span class="badge bg-success">Ongoing</span>
+                            <% } else if(camp.camp.status==="upcoming") { %>
+                                <span class="badge bg-warning">Upcoming</span>
+                        <% } else { %>
+                                <span class="badge bg-danger">Completed</span>
+                        <% } %>
+                    </td>
+                    <td class="text-center">
+                                 <%if(camp.camp.registeredDonors.length){%> 
+                                    <table class="table align-center">                                        
+                                    <%for(donor of camp.camp.registeredDonors){%>
+                                        <tr class="align-center">
+                                            <td class="text-center"><%= donor.donor.username %></td>
+                                            <%if(!donor.isCollected){%>
+                                             <td class="text-center">
+                                                
+                                                    <form method="POST" action="camp/collected/<%=donor.donor._id%>/<%=camp.camp._id%>?_method=PATCH">
+                                                        <button class="blood-received"type="submit" title="mark as collected">Mark as collected</button>
+                                                    </form>
+                                                
+                                                
+                                             </td>
+                                             <td class="text-center">                                                
+                                                    <form action="/camp/denyRegistration/<%= camp.camp._id %>/<%=donor.donor._id%>/?_method=PATCH" method="POST" style="display:inline;">
+                                                        <button class="deny-response">Deny Registration</button>
+                                                    </form>                                                
+                            
+                                            </td>
+                                            <%}%>
+                                        
+                                        </tr>
+                                        <br>
+                                            
+                                    <%}%>                                        
+                                    </table>
+                                     <%}%>
+                                </td>
+
+                    <td class="text-center ">
                         <a class="small-Blue-btn" href="/camp/edit/<%=camp.camp._id%>">Edit</a>    
-                    </td>  
-                    <td class="text-center small-blue-bttn">
+                    </td> 
+                    <td class="text-center">
                         <form method="post" action="/camp/<%=camp.camp._id%>?_method=DELETE">
-                            <button class="small-Blue-btn" type="submit">Delete</button>
+                            <button class="small-Blue-btn " type="submit">Delete</button>
                         </form>
-                    </td>                                          
+                    </td>   
                 </tr>
-                
                 <% } %>
                 <% } %>
             </tbody>
@@ -84,7 +123,7 @@
         
     </div>
 
-    <% if (user.emergencies.length ) { %>
+    <% if (user.emergencies.length) { %>
         <div class="table-responsive">
             <table class="table table-hover align-middle">
                 <thead class="table-warning">
@@ -94,7 +133,7 @@
                         <th class="text-center">Units</th>
                         <th class="text-center">Hospital</th>
                         <th class="text-center">Status</th>
-                        <th class="text-center">Fulfilled By</th>
+                        <th class="text-center">Fulfilled By</th>                        
                         <th class="text-center">Action</th>
                         
                     </tr>
@@ -104,7 +143,7 @@
                         <% if (req && req.emergency) { %>
                     <tr class="align-middle">
                         <td class="text-center"><strong><%= req.emergency.patient.username %></strong></td>
-                        <td class="text-center"><span class="badge bg-danger"><%= req.bloodGroup %></span></td>
+                        <td class="text-center"><span class="badge bg-danger"><%= req.emergency.bloodGroup %></span></td>
                         <td class="text-center"><%= req.emergency.unitsRequired %> Units</td>
                         <td class="text-center"><%= req.emergency.requestedBy.username %></td>
                         <td class="text-center">
@@ -117,15 +156,31 @@
                        
                             <td class="text-center">
                                  <%if(req.emergency.fulfilledBy.length){%> 
+                                    <table class="table align-center">                                        
                                     <%for(donor of req.emergency.fulfilledBy){%>
-                                            <%= donor.donor.username %>,
-                                            <form method="POST" action="/emergencyFulfilled/<%=donor.donor._id%>?_method=PATCH">
-                                                <button class="blood-received"type="submit">Blood Collected</button>
-                                            </form>
+                                        <tr class="align-center">
+                                            <td class="text-center"><%= donor.donor.username %></td>
+                                            <%if(!donor.isCollected){%>
+                                             <td class="text-center">
+                                                
+                                                    <form method="POST" action="emergency/fulfilled/<%=donor.donor._id%>/<%=req.emergency._id%>?_method=PATCH">
+                                                        <button class="blood-received"type="submit" title="mark as collected">Mark as collected</button>
+                                                    </form>
+                                            </td>
+                                            <td>
+                                                    <form action="/emergency/denyFulfillRequest/<%= req.emergency._id %>/<%=donor.donor._id%>/?_method=PATCH" method="POST" style="display:inline;">
+                                                        <button class="deny-response ">Deny Response</button>
+                                                    </form>
+                                                
+                                                
+                                             </td>
+                                            <%}%>
+                                        
+                                        </tr>
+                                        <br>
                                             
-                                            <br>
-                                    <%}%>
-                                     
+                                    <%}%>                                        
+                                    </table>
                                      <%}%>
                                 </td>
                         

@@ -4,6 +4,7 @@ const ExpressError=require("../utils/ExpressError.js");
 const Emergency=require("../models/emergency.js");
 const Camp=require("../models/camp.js");
 const User=require("../models/user.js");
+const updateCampStatus=require("../utils/updateCampstatus.js");
 
 module.exports.renderSignUpForm=(req,res)=>{
     req.session.redirectUrl="/";
@@ -81,7 +82,7 @@ module.exports.logOutUser=(req,res,next)=>{
 };
 
 module.exports.visitDashboard=async(req,res)=>{
-        
+        await updateCampStatus();
         req.session.redirectUrl="/";
         // let {id}=req.params;
         let {role}=req.query;
@@ -125,7 +126,7 @@ module.exports.visitDashboard=async(req,res)=>{
 
         if(role=="organization"){
             let user= await User.findById(req.user._id)
-            .populate({path:"camps.camp"})//.populate({path:"camps",populate:{path:"organizer"}})
+            .populate({path:"camps.camp",populate:{path:"registeredDonors",populate:{path:"donor"}}})
             .populate({path: "emergencies.emergency",populate: [ { path: "patient" }, { path: "requestedBy" }, { path: "fulfilledBy.donor" }]})
             .populate("verification");
         return res.render("dashboards/organizationDashboard.ejs",{user});
@@ -133,7 +134,7 @@ module.exports.visitDashboard=async(req,res)=>{
 
         if(role=="admin"){
             let user= await User.findById(req.user._id)
-            .populate({path:"camps.camp"})//.populate({path:"camps",populate:{path:"organizer"}})
+            .populate({path:"camps.camp",populate:{path:"registeredDonors",populate:{path:"donor"}}})
             .populate({path: "emergencies.emergency",populate: [ { path: "patient" }, { path: "requestedBy" }, { path: "fulfilledBy.donor" }]});
             
             // if(!user){ 
@@ -149,8 +150,14 @@ module.exports.visitDashboard=async(req,res)=>{
 };
 
 module.exports.activeEmergencies=async(req,res)=>{
+        let user= await User.findById(req.user._id);
+        const joinedIds = user.emergencies.map(item => item.emergency);
+        let activeEmergencies = await Emergency.find({
+                                    pincode: req.user.pincode,
+                                    status: "open",
+                                    _id: { $nin: joinedIds } // Exclude the ones already joined
+                                }).populate({ path: "requestedBy" });
         
-        let activeEmergencies=await Emergency.find({pincode:req.user.pincode,status:"open"}).populate({path:"requestedBy"});
         if(!activeEmergencies.length){
                 req.flash("success","No active Emergency blood requirement found in your city");
                 return res.redirect("/");
@@ -159,9 +166,11 @@ module.exports.activeEmergencies=async(req,res)=>{
 };
 
 module.exports.upcomingCamps=async(req,res)=>{
+        await updateCampStatus();
+        let user= await User.findById(req.user._id);
+        const joinedIds = user.camps.map(item => item.camp);
         
-        
-        let upcomingCamps = await Camp.find({status: { $in: ["upcoming", "ongoing"] },pincode: req.user.pincode}).populate("organizer");
+        let upcomingCamps = await Camp.find({status: { $in: ["upcoming", "ongoing"] },pincode: req.user.pincode,_id: { $nin: joinedIds }}).populate("organizer");
 
         if(!upcomingCamps.length){
                 req.flash("success","No upcoming Blood Donation Camps found in your city");

@@ -1,7 +1,7 @@
 const express=require("express");
 const router=express.Router({mergeParams:true});
-const {isVerified}=require("../middlewares");
-const {isLoggedIn}=require("../middlewares");
+const {isLoggedIn,isVerified,isNotAdmin,isNotOrganization,isNotPatient}=require("../middlewares");
+const {}=require("../middlewares");
 const campController=require("../controller/camp.js");
 const wrapAsync=require("../utils/wrapAsync");
 const Camp=require("../models/camp.js");
@@ -19,4 +19,16 @@ router.route("/edit/:id")
 
 router.delete("/:id",isLoggedIn,isVerified,wrapAsync(campController.deleteCamp));
 
+router.patch("/participate/:id",isLoggedIn,isNotAdmin,isNotOrganization,isNotPatient,wrapAsync(campController.participateInCamp));
+
+router.patch("/cancelParticipation/:id",isLoggedIn,wrapAsync(campController.cancelParticipation));
+
+
+router.patch("/collected/:uId/:cId",isLoggedIn, isVerified,wrapAsync(campController.collecBloodInCamp));
+
+
+//to deny Registration of a donor for a camp 
+router.patch("/denyRegistration/:cId/:uId",isLoggedIn,isVerified,wrapAsync(campController.denyDonorRegistrationForCamp));
+
 module.exports=router;
+

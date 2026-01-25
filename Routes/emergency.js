@@ -9,9 +9,6 @@ const User=require("../models/user.js");
 router.route("/")
         .get(isLoggedIn,isVerified,emergencyController.renderCreateEmergencyForm)
         .post(isLoggedIn,isVerified,wrapAsync(emergencyController.createEmergency));
-// router.get("/showEmergency",(req,res)=>{
-//     res.render("emergency/showEmergency.ejs");
-// });
 
 router.delete("/:id",isLoggedIn,isVerified,wrapAsync(emergencyController.destroyEmergency));
 
@@ -19,4 +16,11 @@ router.patch("/fulfill/:id",isLoggedIn,isNotAdmin,isNotOrganization,isNotPatient
 
 
 router.patch("/cancelFulfill/:id",isLoggedIn,wrapAsync(emergencyController.cancelFulfillEmergency));
+
+router.patch("/fulfilled/:uId/:eId",isLoggedIn, isVerified,wrapAsync(emergencyController.emergencyFulfilled));
+
+//to deny fulfill Emergency request of donor
+router.patch("/denyFulfillRequest/:eId/:dId",isLoggedIn, isVerified,wrapAsync(emergencyController.denyFulfillEmergencyRequest));
+
+
 module.exports=router;

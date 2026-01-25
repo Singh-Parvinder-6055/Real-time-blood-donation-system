@@ -30,4 +30,11 @@ router.get("/activeEmergencies",isLoggedIn,wrapAsync(userController.activeEmerge
 router.get("/upcomingCamps",isLoggedIn,wrapAsync(userController.upcomingCamps));
 
 router.get("/activeEmergenciesWithPincode",wrapAsync(userController.activeEmergenciesWithPincode));
+
+router.patch("/changePincode",isLoggedIn,async(req,res)=>{
+        let {pincode}=req.body;
+        await User.findByIdAndUpdate(req.user._id,{pincode:pincode});
+        req.flash("success",`Pincode changed to ${pincode} successfully.`);
+        res.redirect(`/dashboard?role=${req.user.role}`);
+});
 module.exports=router;

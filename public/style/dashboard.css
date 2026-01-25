@@ -35,3 +35,13 @@
     display:inline;
     max-height: 5rem;
 }
+
+.deny-response{
+    color:white;
+    background-color:#bf1818;  
+    text-decoration:none;
+    padding:0.1rem 0.3rem;
+    border-radius:0.5rem;    
+    border:none;
+    font-size:0.8rem;
+}
