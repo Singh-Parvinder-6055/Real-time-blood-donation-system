@@ -19,7 +19,7 @@
 
 // /public/js/socket-client.js
 (function () {
-  if (window.__socketInitialized) return; // 🔒 hard lock
+  if (window.__socketInitialized) return; // hard lock
 
   window.__socketInitialized = true;
 
@@ -37,9 +37,11 @@
 
   socket.on("connect", () => {
     console.log(" Socket connected:", socket.id);
+     // notify others that socket is ready
+    document.dispatchEvent(new Event("socket:ready"));
   });
 
-  socket.on("disconnect", () => {
-    console.log(" Socket disconnected");
-  });
+  // socket.on("disconnect", () => {
+  //   console.log(" Socket disconnected");
+  // });
 })();

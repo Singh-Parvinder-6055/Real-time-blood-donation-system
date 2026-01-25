@@ -21,10 +21,14 @@ module.exports = (io) => {
     //  AUTO JOIN ROOMS
     if (socket.user.role === "donor") {
       socket.join("donors");
+        console.log("DONOR joined donors room");
+
     }
 
     if (socket.user.role === "organization") {
       socket.join("organizations");
+              console.log("organization joined organizations room");
+
     }
 
     console.log("Joined rooms:", socket.rooms);
