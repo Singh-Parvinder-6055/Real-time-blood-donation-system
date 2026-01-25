@@ -70,6 +70,7 @@
                                     <%for(donor of camp.camp.registeredDonors){%>
                                         <tr class="align-center">
                                             <td class="text-center"><%= donor.donor.username %></td>
+                                            <td class="text-center"><%= donor.donor.phone %></td>
                                             <%if(!donor.isCollected){%>
                                              <td class="text-center">
                                                 
@@ -160,6 +161,7 @@
                                     <%for(donor of req.emergency.fulfilledBy){%>
                                         <tr class="align-center">
                                             <td class="text-center"><%= donor.donor.username %></td>
+                                            <td class="text-center"><%= donor.donor.phone %></td>
                                             <%if(!donor.isCollected){%>
                                              <td class="text-center">
                                                 

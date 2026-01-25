@@ -1,3 +1,5 @@
+const jwt = require("jsonwebtoken");
+
 module.exports.isVerified=(req,res,next)=>{
     if(!req.user.isVerified){
         req.flash("error","You are not verified")
@@ -75,4 +77,18 @@ module.exports.isNotPatient=(req,res,next)=>{
 
     }
     next();
+
+}
+
+module.exports.socketAuth = (socket, next) => {
+  const token = socket.handshake.auth.token;
+  if (!token) return next(new Error("No token"));
+
+  try {
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+    socket.user = user; // attach user
+    next();
+  } catch (err) {
+    next(new Error("Invalid token"));
+  }
 };

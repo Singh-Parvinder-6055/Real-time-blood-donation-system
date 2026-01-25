@@ -43,6 +43,7 @@ module.exports.verifyVerification=async(req,res)=>{
     
     await verification.save();
     await user.save();
+    req.flash("success","Organization verified successfully.");
     let adminDashboard=req.session.dashboardRedirect;
     if(adminDashboard){
         res.redirect(adminDashboard);
@@ -79,6 +80,7 @@ module.exports.rejectVerification=async(req,res)=>{
     user.isVerified=false;
     await verification.save();
     await user.save();
+    req.flash("success","Organization's verification request rejected successfully.");
     let adminDashboard=req.session.dashboardRedirect;
     if(adminDashboard){
         res.redirect(adminDashboard);

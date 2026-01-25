@@ -19,6 +19,25 @@
     <%- include("../includes/navbar.ejs")%>
     <%}%>
 
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <% if(typeof notifications !== 'undefined' && notifications.length > 0) { %>
+    <% notifications.forEach(note => { %>
+      <div class="toast show border-danger" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-danger text-white">
+          <strong class="me-auto"><i class="fa-solid fa-droplet me-2"></i>Emergency Alert</strong>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body">
+          <%= note.message %>
+          <div class="mt-2 pt-2 border-top">
+            <a href="/activeEmergencies" class="btn btn-danger btn-sm">Help Now</a>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  <% } %>
+</div>
+
     <div>
         <%- include("../includes/flash.ejs")%>
         <%-body-%>

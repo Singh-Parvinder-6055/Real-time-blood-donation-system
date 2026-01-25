@@ -59,13 +59,39 @@ async function Main(){
 
 Main().then(()=>{console.log("connected to database");}).catch(err=>{console.log(err);});
 
-app.use((req,res,next)=>{
-    res.locals.currUser=req.user;
-    res.locals.success=req.flash("success");
-    res.locals.error=req.flash("error");
-    res.locals.hideNavbar=false;
+
+app.use(async (req, res, next) => {
+    res.locals.currUser = req.user;
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    res.locals.hideNavbar = false;
+
+    // Check if user is a donor and hasn't seen the login notification yet
+    if (req.user && req.user.role === 'donor' && !req.session.hasSeenNotification) {
+        try {
+            const Notification = require("./models/notification");
+            const unreadNotes = await Notification.find({ 
+                recipient: req.user._id, 
+                isRead: false 
+            }).sort({ createdAt: -1 }).limit(3);
+
+            if (unreadNotes.length > 0) {
+                res.locals.notifications = unreadNotes;
+                // Set the session flag so it doesn't show again until next login
+                req.session.hasSeenNotification = true; 
+            } else {
+                res.locals.notifications = [];
+            }
+        } catch (err) {
+            console.error("Notification middleware error:", err);
+            res.locals.notifications = [];
+        }
+    } else {
+        res.locals.notifications = [];
+    }
     next();
-})
+});
+
 
 //home route
 app.get("/", async (req,res)=>{
