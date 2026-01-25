@@ -53,7 +53,7 @@ socket.on("blood_request", (data) => {
         Blood Group: <b>${data.bloodGroup}</b><br>
         Units: <b>${data.units}</b><br>
         Hospital: ${data.hospital.name}, ${data.hospital.city}<br>
-        If you are intersted in donating blood,Please contact us at
+        If you are intersted in donating blood,Please contact us!
       </div>
       <button type="button"
         class="btn-close btn-close-white me-2 m-auto"
