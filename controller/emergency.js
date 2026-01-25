@@ -181,3 +181,45 @@ module.exports.emergencyFulfilled=async(req,res)=>{
         req.flash("success","Emergency fulfilled");
         res.redirect(`/dashboard?role=${req.user.role}`);
 };
+
+module.exports.denyFulfillEmergencyRequest=async(req,res)=>{
+         let {eId,dId}=req.params;
+                let emergency = await Emergency.findById(eId).populate("fulfilledBy.donor");
+                let emergencyDonor=await User.findById(dId);
+        
+                
+                if(!emergency){
+                        req.flash("error","Emergency not found");
+                        return res.redirect(`/dashboard?role=${req.user.role}`);
+                }
+        
+                let user = emergency.fulfilledBy.find(d =>
+                                        d.donor._id.equals(emergencyDonor._id)
+                                 );
+                if (!user) {
+                        req.flash("error", "This donor not fulfilled this requirement");
+                        return res.redirect(`/dashboard?role=${req.user.role}`);
+                }
+        
+                
+                if(user.isCollected){
+                        req.flash("error","This blood has already been collected, therefore, cannot deny the fulfill request.");
+                        return res.redirect(`/dashboard?role=${req.user.role}`);
+                }
+                
+                const newStatus = (emergency.unitsCollected - 1 < emergency.unitsRequired) ? "open" : "fulfilled";
+        
+                await Emergency.findByIdAndUpdate(eId, {
+                                $inc: { unitsCollected: -1 }, // Atomic decrement
+                                $set: { status: newStatus },   // Atomic status update
+                                $pull: { fulfilledBy: { donor: emergencyDonor._id } } // Atomic array removal
+                        });
+                
+                await User.findByIdAndUpdate(emergencyDonor._id,{$pull:{emergencies:{emergency:emergency._id}}});
+                
+                
+                req.flash("success","Donors response has been denied successfully.");
+                res.redirect(`/dashboard?role=${req.user.role}`);
+                
+                
+};
