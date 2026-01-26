@@ -58,7 +58,7 @@ let registeredUser= await User.register(newUser, password);
 };
 
 module.exports.renderLoginForm=(req,res)=>{
-    req.session.redirectUrl="/";
+    
     res.locals.hideNavbar=true;
     res.render("user/login.ejs");
 };
